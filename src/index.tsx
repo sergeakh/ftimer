@@ -8,6 +8,8 @@ import { JSX, render } from "preact";
 
 import styles from "./main.css";
 
+import { Timer } from "./Timer";
+
 const rootEl = document.getElementById("root");
 
 if (!rootEl) {
@@ -16,6 +18,6 @@ if (!rootEl) {
 
 rootEl.classList.add(styles.main);
 
-const App = (): JSX.Element => <h1>FTimer</h1>;
+const App = (): JSX.Element => <Timer />;
 
 render(<App />, rootEl);

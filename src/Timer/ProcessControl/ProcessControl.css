@@ -1,0 +1,61 @@
+.process-control {
+  display: flex;
+  flex-direction: row;
+  margin-top: 40px;
+}
+
+.btn-icon {
+  padding-left: 60px;
+}
+
+@media (max-width: 399px) {
+  .btn-icon {
+    padding-left: 50px;
+  }
+}
+@media (min-width: 400px) {
+  .btn-icon {
+    padding-left: 60px;
+  }
+}
+
+.btn-icon::before {
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  content: "";
+  display: block;
+  margin: auto;
+}
+
+@media (max-width: 399px) {
+  .btn-icon::before {
+    left: 22px;
+  }
+}
+@media (min-width: 400px) {
+  .btn-icon::before {
+    left: 30px;
+  }
+}
+
+.btn-start::before {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-left: 16px solid #fff;
+  border-bottom: 8px solid transparent;
+}
+
+.btn-pause::before {
+  width: 16px;
+  height: 16px;
+  border-left: 5px solid #000;
+  border-right: 5px solid #000;
+}
+
+.btn-stop::before {
+  width: 16px;
+  height: 16px;
+  background-color: #000;
+}
