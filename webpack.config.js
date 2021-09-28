@@ -1,9 +1,12 @@
 import path from "path";
+import crypto from "crypto";
 import HtmlPlugin from "html-webpack-plugin";
 import { CleanWebpackPlugin as CleanPlugin } from "clean-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CompressionWebpackPlugin from "compression-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import { InjectManifest } from "workbox-webpack-plugin";
+import webpack from "webpack";
 // import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const PATH_SRC = path.resolve("src");
@@ -69,6 +72,29 @@ export default (env, argv) => {
             filename: devMode ? "[name][ext]" : "[name].[hash:8][ext]",
           },
         },
+        {
+          test: /\.png$/,
+          include: path.resolve(PATH_SRC, "assets/favicon"),
+          type: "asset/resource",
+          generator: {
+            filename: devMode
+              ? "favicon.[name][ext]"
+              : "favicon.[name].[hash:8][ext]",
+          },
+        },
+        {
+          test: /\.webmanifest$/,
+          include: PATH_SRC,
+          generator: {
+            filename: devMode ? "[name][ext]" : "[name].[hash:8][ext]",
+          },
+          use: [
+            {
+              loader: path.resolve("./lib/webmanifest-loader"),
+            },
+          ],
+          type: "asset/resource",
+        },
       ],
     },
 
@@ -101,6 +127,19 @@ export default (env, argv) => {
       new HtmlPlugin({
         template: path.resolve(PATH_SRC, "index.html"),
       }),
+      ...(devMode
+        ? []
+        : [
+            new webpack.DefinePlugin({
+              SW_VERSION: JSON.stringify(
+                crypto.randomBytes(16).toString("hex")
+              ),
+            }),
+            new InjectManifest({
+              swSrc: "./src/sw.js",
+              exclude: [/^favicon\./, /\.map$/, /\.LICENSE\.txt$/],
+            }),
+          ]),
       new CleanPlugin(),
     ],
 

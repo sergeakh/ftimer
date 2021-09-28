@@ -1,8 +1,4 @@
-/* eslint-disable import/first */
-if (process.env.NODE_ENV === "development") {
-  // eslint-disable-next-line global-require
-  require("preact/debug");
-}
+import "./configure";
 
 import { JSX, render } from "preact";
 
