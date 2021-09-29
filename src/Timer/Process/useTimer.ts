@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 
 import { noop } from "../../utils/common";
+import { clearWorkerTimeout, setWorkerTimeout } from "../../utils/timer";
 
 const UPDATE_TIMEOUT = 1000 / 60;
 
@@ -35,13 +36,13 @@ export const useTimer = (
 
     const endTime = Date.now() + timeLeft;
 
-    let timerId = setTimeout(function go() {
+    let timerId = setWorkerTimeout(function go() {
       const now = Date.now();
 
       if (now < endTime) {
         setTimeLeft(endTime - now);
 
-        timerId = setTimeout(go, UPDATE_TIMEOUT);
+        timerId = setWorkerTimeout(go, UPDATE_TIMEOUT);
       } else {
         setTimeLeft(0);
         handleFinish();
@@ -49,7 +50,7 @@ export const useTimer = (
     }, UPDATE_TIMEOUT);
 
     return () => {
-      clearTimeout(timerId);
+      clearWorkerTimeout(timerId);
     };
   }, [status, handleFinish]);
 
