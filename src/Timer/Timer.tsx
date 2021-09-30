@@ -1,5 +1,6 @@
 import { JSX } from "preact";
-import { useState, useCallback } from "preact/hooks";
+import { useState, useCallback, useEffect } from "preact/hooks";
+import NoSleep from "nosleep.js";
 
 import { Process, ProcessStatus } from "./Process";
 import { ProcessControl, ProcessControlStatus } from "./ProcessControl";
@@ -8,6 +9,8 @@ import { getMillisecondsFromMinutes } from "../utils/common";
 
 import styles from "./Timer.css";
 import { useAlarm } from "../hooks/useAlarm";
+
+const noSleep = new NoSleep();
 
 const TIMEOUT_PER_MIN = 1;
 const TIMEOUT = getMillisecondsFromMinutes(TIMEOUT_PER_MIN);
@@ -57,6 +60,16 @@ export const Timer = (): JSX.Element => {
   }, []);
 
   useAlarm(status === Status.Finish, handleAlarmFinish);
+
+  useEffect(() => {
+    if (status === Status.Run) {
+      noSleep.enable();
+    }
+
+    return () => {
+      noSleep.disable();
+    };
+  }, [status]);
 
   return (
     <div class={styles.timer}>
