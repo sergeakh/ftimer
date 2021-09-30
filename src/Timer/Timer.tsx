@@ -1,12 +1,13 @@
 import { JSX } from "preact";
-import { useState, useCallback, useEffect } from "preact/hooks";
+import { useState, useCallback } from "preact/hooks";
 
 import { Process, ProcessStatus } from "./Process";
 import { ProcessControl, ProcessControlStatus } from "./ProcessControl";
 
-import { getMillisecondsFromMinutes, noop, SEC } from "../utils/common";
+import { getMillisecondsFromMinutes } from "../utils/common";
 
 import styles from "./Timer.css";
+import { useAlarm } from "../hooks/useAlarm";
 
 const TIMEOUT_PER_MIN = 1;
 const TIMEOUT = getMillisecondsFromMinutes(TIMEOUT_PER_MIN);
@@ -51,17 +52,11 @@ export const Timer = (): JSX.Element => {
     setStatus(Status.Finish);
   }, []);
 
-  useEffect(() => {
-    if (status !== Status.Finish) return noop;
+  const handleAlarmFinish = useCallback(() => {
+    setStatus(Status.Start);
+  }, []);
 
-    const timerId = setTimeout(() => {
-      setStatus(Status.Start);
-    }, SEC);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [status]);
+  useAlarm(status === Status.Finish, handleAlarmFinish);
 
   return (
     <div class={styles.timer}>
