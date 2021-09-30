@@ -1,6 +1,6 @@
 import { useEffect } from "preact/hooks";
 
-import { formatTime } from "../../utils/common";
+import { formatTime, normalizeTime } from "../../../utils/common";
 
 export const enum Status {
   Start,
@@ -21,7 +21,7 @@ export const setTitle = (title: string): void => {
 export const getFirstPartTitle = (status: Status, timeLeft: number): string => {
   if (status === Status.Start) return "";
 
-  return `${formatTime(timeLeft)} `;
+  return `${formatTime(normalizeTime(timeLeft))} `;
 };
 
 export const useTitleStatus = (status: Status, timeLeft: number): void => {

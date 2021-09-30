@@ -1,9 +1,18 @@
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop: () => void = () => {};
 
+export const SEC = 1000;
 const MS_PER_SEC = 1000;
 const SEC_PER_MIN = 60;
 const MS_PER_MIN = SEC_PER_MIN * MS_PER_SEC;
+
+/**
+ *
+ * @param time - ms
+ * @return {number}
+ */
+export const normalizeTime = (time: number): number =>
+  Math.round(time / 1000) * 1000;
 
 /**
  *

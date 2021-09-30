@@ -1,45 +1,71 @@
 import { JSX } from "preact";
+import cn from "classnames";
 
-import { formatTime } from "../../utils/common";
+import { useLayoutEffect, useRef } from "preact/hooks";
+import { formatTime, normalizeTime } from "../../utils/common";
+import { Status } from "./types";
+
+import { getСircumference } from "./common";
 
 import styles from "./Progress.css";
 
 const RADIUS = 22;
-const CIRCUMFERENCE = RADIUS * 2 * Math.PI;
-
-function getProgress(percent: number) {
-  return CIRCUMFERENCE - percent * CIRCUMFERENCE;
-}
+const CIRCUMFERENCE = getСircumference(RADIUS);
 
 type Props = {
+  status: Status;
   timeLeft: number;
   timeout: number;
 };
 
-export const Progress = ({ timeLeft, timeout }: Props): JSX.Element => (
-  <div className={styles.progress}>
-    <svg viewBox="0 0 50 50" className={styles.svg}>
-      <circle
-        className={styles.circle}
-        cx="25"
-        cy="25"
-        r={`${RADIUS}`}
-        stroke="#00000011"
-        stroke-width="2"
-        fill="transparent"
-      />
-      <circle
-        className={styles.circle}
-        cx="25"
-        cy="25"
-        r={`${RADIUS}`}
-        stroke="#000"
-        stroke-width="2"
-        stroke-dasharray={`${CIRCUMFERENCE} ${CIRCUMFERENCE}`}
-        stroke-dashoffset={getProgress(timeLeft / timeout)}
-        fill="transparent"
-      />
-    </svg>
-    <div className={styles.time}>{formatTime(timeLeft)}</div>
-  </div>
-);
+export const Progress = ({ status, timeLeft }: Props): JSX.Element => {
+  const circleRef = useRef<SVGCircleElement>(null);
+
+  useLayoutEffect(() => {
+    if (!circleRef.current) return;
+
+    const circle = circleRef.current;
+
+    if (status === Status.Start) {
+      circle.style.animationDuration = "";
+      circle.style.animationPlayState = "";
+      circle.style.strokeDashoffset = "";
+    } else if (status === Status.Run) {
+      circle.style.animationDuration = `${timeLeft}ms`;
+      circle.style.animationPlayState = "running";
+      circle.style.strokeDashoffset = `${CIRCUMFERENCE}`;
+    } else if (status === Status.Pause) {
+      circle.style.animationPlayState = `paused`;
+    }
+  }, [status]);
+
+  return (
+    <div className={styles.progress}>
+      <svg viewBox="0 0 50 50" className={styles.svg}>
+        <circle
+          className={styles.circle}
+          cx="50%"
+          cy="50%"
+          r={RADIUS}
+          stroke="#00000011"
+          stroke-width="3"
+          fill="transparent"
+        />
+        <circle
+          ref={circleRef}
+          className={cn(styles.circle, {
+            [styles.circleAnimation]: status !== Status.Start,
+          })}
+          cx="50%"
+          cy="50%"
+          r={RADIUS}
+          stroke="#000"
+          stroke-width="3"
+          stroke-dasharray={CIRCUMFERENCE}
+          fill="transparent"
+        />
+      </svg>
+      <div className={styles.time}>{formatTime(normalizeTime(timeLeft))}</div>
+    </div>
+  );
+};

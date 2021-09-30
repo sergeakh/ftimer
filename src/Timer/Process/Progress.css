@@ -32,9 +32,21 @@
   }
 }
 
+@keyframes circleLoad {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .circle {
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
+}
+
+.circle-animation {
+  animation-name: circleLoad;
+  animation-direction: reverse;
+  animation-timing-function: linear;
 }
 
 .time {

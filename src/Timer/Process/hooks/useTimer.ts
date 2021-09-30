@@ -1,15 +1,12 @@
 import { useEffect, useState } from "preact/hooks";
 
-import { noop } from "../../utils/common";
-import { clearWorkerTimeout, setWorkerTimeout } from "../../utils/timer";
+import { noop, SEC } from "../../../utils/common";
+import { clearWorkerTimeout, setWorkerTimeout } from "../../../utils/timer";
 
-const UPDATE_TIMEOUT = 1000 / 60;
+import { Status } from "../types";
 
-export const enum Status {
-  Start,
-  Run,
-  Pause,
-}
+const getTimeout = (now: number, endTime: number) =>
+  (endTime - now) % SEC || SEC;
 
 /**
  *
@@ -42,12 +39,12 @@ export const useTimer = (
       if (now < endTime) {
         setTimeLeft(endTime - now);
 
-        timerId = setWorkerTimeout(go, UPDATE_TIMEOUT);
+        timerId = setWorkerTimeout(go, getTimeout(now, endTime));
       } else {
         setTimeLeft(0);
         handleFinish();
       }
-    }, UPDATE_TIMEOUT);
+    }, SEC);
 
     return () => {
       clearWorkerTimeout(timerId);

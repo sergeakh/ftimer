@@ -4,11 +4,11 @@ import { useState, useCallback, useEffect } from "preact/hooks";
 import { Process, ProcessStatus } from "./Process";
 import { ProcessControl, ProcessControlStatus } from "./ProcessControl";
 
-import { getMillisecondsFromMinutes, noop } from "../utils/common";
+import { getMillisecondsFromMinutes, noop, SEC } from "../utils/common";
 
 import styles from "./Timer.css";
 
-const TIMEOUT_PER_MIN = 25;
+const TIMEOUT_PER_MIN = 1;
 const TIMEOUT = getMillisecondsFromMinutes(TIMEOUT_PER_MIN);
 
 const enum Status {
@@ -56,7 +56,7 @@ export const Timer = (): JSX.Element => {
 
     const timerId = setTimeout(() => {
       setStatus(Status.Start);
-    }, 300);
+    }, SEC);
 
     return () => {
       clearTimeout(timerId);

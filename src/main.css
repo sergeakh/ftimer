@@ -19,11 +19,22 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.main {
+:global(#root) {
   display: flex;
   margin: 0 auto;
   align-items: center;
   justify-content: center;
   max-width: 500px;
   width: 100%;
+}
+
+:global(.app-start) {
+  display: block !important;
+  margin: 0 auto;
+  text-align: center;
+}
+
+:global(.app-start) > img {
+  margin-top: 50px;
+  width: 100px;
 }
