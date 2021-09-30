@@ -65,7 +65,7 @@ export default (env, argv) => {
           ],
         },
         {
-          test: /\.(ogg|svg|png)$/,
+          test: /\.(ogg|mp3|svg|png)$/,
           include: PATH_SRC,
           type: "asset/resource",
           generator: {

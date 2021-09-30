@@ -1,4 +1,5 @@
 import { useEffect } from "preact/hooks";
+import { isMobile } from "../../../utils/browser";
 
 import { formatTime, normalizeTime } from "../../../utils/common";
 
@@ -25,6 +26,8 @@ export const getFirstPartTitle = (status: Status, timeLeft: number): string => {
 };
 
 export const useTitleStatus = (status: Status, timeLeft: number): void => {
+  if (isMobile()) return;
+
   useEffect(() => {
     setTitle(`${getFirstPartTitle(status, timeLeft)}${Statuses[status]}`);
   }, [status, timeLeft]);

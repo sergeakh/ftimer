@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from "preact/hooks";
+import { isMobile } from "../../../utils/browser";
 
 import { getProgress, getСircumference } from "../common";
 
@@ -66,6 +67,8 @@ export const useIconStatus = (
   timeout: number,
   timeLeft: number
 ): void => {
+  if (isMobile()) return;
+
   useEffect(() => {
     if (!iconDefault) return;
     if (!icon) return;

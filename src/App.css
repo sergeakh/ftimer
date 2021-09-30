@@ -28,17 +28,6 @@ body {
   width: 100%;
 }
 
-:global(.app-start) {
-  display: block !important;
-  margin: 0 auto;
-  text-align: center;
-}
-
-:global(.app-dummy) > img {
-  margin-top: 50px;
-  width: 100px;
-}
-
 .app {
   display: flex;
   flex-direction: column;

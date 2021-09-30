@@ -6,13 +6,13 @@ import { Process, ProcessStatus } from "./Process";
 import { ProcessControl, ProcessControlStatus } from "./ProcessControl";
 
 import { getMillisecondsFromMinutes } from "../utils/common";
+import { useAlarm } from "../hooks/useAlarm";
 
 import styles from "./Timer.css";
-import { useAlarm } from "../hooks/useAlarm";
 
 const noSleep = new NoSleep();
 
-const TIMEOUT_PER_MIN = 2;
+const TIMEOUT_PER_MIN = 1;
 const TIMEOUT = getMillisecondsFromMinutes(TIMEOUT_PER_MIN);
 
 const enum Status {
@@ -43,7 +43,31 @@ type Props = {
 export const Timer = (props: Props): JSX.Element => {
   const [status, setStatus] = useState<Status>(Status.Start);
 
+  useEffect(() => {
+    const enableNoSleep = () => {
+      document.removeEventListener("click", enableNoSleep, false);
+
+      if (status === Status.Run && !noSleep.isEnabled) {
+        noSleep.enable();
+      }
+    };
+
+    document.addEventListener("click", enableNoSleep);
+
+    return () => {
+      document.removeEventListener("click", enableNoSleep);
+    };
+  }, [status]);
+
+  const handleAlarmFinish = useCallback(() => {
+    setStatus(Status.Start);
+  }, []);
+
+  const initAlarm = useAlarm(status === Status.Finish, handleAlarmFinish);
+
   const handleStart = useCallback(() => {
+    noSleep.enable();
+    initAlarm();
     setStatus(Status.Run);
   }, []);
 
@@ -59,20 +83,10 @@ export const Timer = (props: Props): JSX.Element => {
     setStatus(Status.Finish);
   }, []);
 
-  const handleAlarmFinish = useCallback(() => {
-    setStatus(Status.Start);
-  }, []);
-
-  useAlarm(status === Status.Finish, handleAlarmFinish);
-
   useEffect(() => {
-    if (status === Status.Run) {
-      noSleep.enable();
-    }
-
-    return () => {
+    if (status !== Status.Run) {
       noSleep.disable();
-    };
+    }
   }, [status]);
 
   return (
