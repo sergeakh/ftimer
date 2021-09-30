@@ -1,7 +1,7 @@
 import { JSX } from "preact";
 import cn from "classnames";
 
-import { useLayoutEffect, useRef } from "preact/hooks";
+import { useCallback, useLayoutEffect, useRef } from "preact/hooks";
 import { formatTime, normalizeTime } from "../../utils/common";
 import { Status } from "./types";
 
@@ -18,8 +18,22 @@ type Props = {
   timeout: number;
 };
 
-export const Progress = ({ status, timeLeft }: Props): JSX.Element => {
+const CIRCLE_TRANSITION = ".7s stroke-dashoffset linear";
+
+export const Progress = ({ status, timeLeft, timeout }: Props): JSX.Element => {
   const circleRef = useRef<SVGCircleElement>(null);
+
+  const handleAnimationEnd = useCallback(() => {
+    if (!circleRef.current) return;
+
+    circleRef.current.style.transition = CIRCLE_TRANSITION;
+  }, []);
+
+  const handleTransitionEnd = useCallback(() => {
+    if (!circleRef.current) return;
+
+    circleRef.current.style.transition = "";
+  }, []);
 
   useLayoutEffect(() => {
     if (!circleRef.current) return;
@@ -27,15 +41,12 @@ export const Progress = ({ status, timeLeft }: Props): JSX.Element => {
     const circle = circleRef.current;
 
     if (status === Status.Start) {
-      circle.style.animationDuration = "";
-      circle.style.animationPlayState = "";
-      circle.style.strokeDashoffset = "";
+      circle.style.animationPlayState = "paused";
     } else if (status === Status.Run) {
-      circle.style.animationDuration = `${timeLeft}ms`;
+      circle.style.animationDuration = `${timeout}ms`;
       circle.style.animationPlayState = "running";
-      circle.style.strokeDashoffset = `${CIRCUMFERENCE}`;
     } else if (status === Status.Pause) {
-      circle.style.animationPlayState = `paused`;
+      circle.style.animationPlayState = "paused";
     }
   }, [status]);
 
@@ -62,7 +73,10 @@ export const Progress = ({ status, timeLeft }: Props): JSX.Element => {
           stroke="#000"
           stroke-width="3"
           stroke-dasharray={CIRCUMFERENCE}
+          stroke-dashoffset={status === Status.Start ? 0 : CIRCUMFERENCE}
           fill="transparent"
+          onAnimationEnd={handleAnimationEnd}
+          onTransitionEnd={handleTransitionEnd}
         />
       </svg>
       <div className={styles.time}>{formatTime(normalizeTime(timeLeft))}</div>

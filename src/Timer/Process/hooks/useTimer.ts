@@ -47,6 +47,12 @@ export const useTimer = (
     }, SEC);
 
     return () => {
+      const now = Date.now();
+
+      if (now < endTime) {
+        setTimeLeft(endTime - Date.now());
+      }
+
       clearWorkerTimeout(timerId);
     };
   }, [status, handleFinish]);

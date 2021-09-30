@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from "preact/hooks";
+
 import { isMobile } from "../../../utils/browser";
 
 import { getProgress, getСircumference } from "../common";
@@ -64,8 +65,8 @@ const createBlob = (svg: string): Blob =>
 
 export const useIconStatus = (
   status: Status,
-  timeout: number,
-  timeLeft: number
+  timeLeft: number,
+  timeout: number
 ): void => {
   if (isMobile()) return;
 

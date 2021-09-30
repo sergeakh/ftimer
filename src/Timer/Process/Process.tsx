@@ -7,8 +7,6 @@ import { Progress } from "./Progress";
 
 import { useTitleStatus, Status as TitleStatus } from "./hooks/useTitleStatus";
 import { useIconStatus, Status as IconStatus } from "./hooks/useIconStatus";
-
-import { useThrottleValue } from "../../hooks/useThrottleValue";
 import { useThrottleAnimationFrameValue } from "../../hooks/useThrottleAnimationFrameValue";
 import { SEC } from "../../utils/common";
 
@@ -33,11 +31,10 @@ const iconStatuses = {
 export const Process = ({ status, timeout, onFinish }: Props): JSX.Element => {
   const timeLeft = useTimer(status, timeout, onFinish);
   const animationedTimeLeft = useThrottleAnimationFrameValue(timeLeft);
-  const throttledTimeLeft = useThrottleValue(timeLeft, SEC);
 
   useTitleStatus(titleStatuses[status], timeLeft);
 
-  useIconStatus(iconStatuses[status], timeout, throttledTimeLeft);
+  useIconStatus(iconStatuses[status], timeLeft - SEC, timeout);
 
   return (
     <Progress
