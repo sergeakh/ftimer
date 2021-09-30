@@ -34,7 +34,12 @@ body {
   text-align: center;
 }
 
-:global(.app-start) > img {
+:global(.app-dummy) > img {
   margin-top: 50px;
   width: 100px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
 }

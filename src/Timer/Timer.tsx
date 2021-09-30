@@ -12,7 +12,7 @@ import { useAlarm } from "../hooks/useAlarm";
 
 const noSleep = new NoSleep();
 
-const TIMEOUT_PER_MIN = 1;
+const TIMEOUT_PER_MIN = 2;
 const TIMEOUT = getMillisecondsFromMinutes(TIMEOUT_PER_MIN);
 
 const enum Status {
@@ -36,7 +36,11 @@ const processStatuses = {
   [Status.Finish]: ProcessStatus.Start,
 };
 
-export const Timer = (): JSX.Element => {
+type Props = {
+  path: string;
+};
+
+export const Timer = (props: Props): JSX.Element => {
   const [status, setStatus] = useState<Status>(Status.Start);
 
   const handleStart = useCallback(() => {
