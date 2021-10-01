@@ -5,24 +5,32 @@ import { useCallback } from "preact/hooks";
 import styles from "./App.css";
 
 import { Timer } from "./Timer";
-import { Setting } from "./Setting";
+import { Settings } from "./Settings";
+import { PATHS } from "./constants";
 
-const paths = {
-  root: "/",
-  setting: "/setting",
-};
+import { settingsStorage } from "./api/settingsStorage";
+import { useSettings } from "./hooks/useSettings";
+import { SettingsContext } from "./contexts/settings";
 
 export const App = (): JSX.Element => {
+  const settings = useSettings(settingsStorage);
+
   const handleChange = useCallback(({ url }: RouterProps) => {
-    if (!Object.values(paths).includes(url || "")) route("/");
+    if (!Object.values(PATHS).includes(url || "")) route("/");
   }, []);
+
+  if (!settings.isReady) {
+    return <></>;
+  }
 
   return (
     <div class={styles.app}>
-      <Router onChange={handleChange}>
-        <Timer path={paths.root} />
-        <Setting path={paths.setting} />
-      </Router>
+      <SettingsContext.Provider value={settings}>
+        <Router onChange={handleChange}>
+          <Timer path={PATHS.root} />
+          <Settings path={PATHS.settings} />
+        </Router>
+      </SettingsContext.Provider>
     </div>
   );
 };

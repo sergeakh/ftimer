@@ -1,3 +1,7 @@
+.link-settings {
+  background-image: url("../assets/icons/settings.svg");
+}
+
 .timer {
   margin: auto;
   width: 100%;

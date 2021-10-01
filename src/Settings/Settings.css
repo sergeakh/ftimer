@@ -1,0 +1,51 @@
+.link-close {
+  background-image: url("../assets/icons/close.svg");
+  background-size: 25px 25px;
+}
+
+.settings {
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.label-title {
+  font-weight: bold;
+}
+
+.input {
+  position: relative;
+  width: 70px;
+  text-align: right;
+  border: none;
+  border-bottom: 1px solid #000;
+  padding: 10px;
+  padding-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.input:focus {
+  outline: none;
+  border-bottom-width: 2px;
+  padding-bottom: 9px;
+}
