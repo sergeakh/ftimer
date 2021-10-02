@@ -1,4 +1,4 @@
-import { SettingsStorage } from "../intrefaces/SettingStorage";
+import { SettingsStorage } from "../interfaces/SettingsStorage";
 
 const PREFIX_STORE_NAME = "settings";
 

@@ -1,18 +1,21 @@
 import { JSX } from "preact";
 import { useCallback, useContext } from "preact/hooks";
 
-import { Header, HeaderLink } from "../Header";
+import { Header, HeaderLink } from "../ui/Header";
 
 import { PATHS } from "../constants";
 
-import styles from "./Settings.css";
-import { SettingsContext } from "../contexts/settings";
+import { SettingsContext } from "./context";
 import {
   MAX_DURATION,
   MAX_LONG_BREAK_EVERY,
   MIN_DURATION,
   MIN_LONG_BREAK_EVERY,
-} from "../constants/common";
+} from "./constants";
+import { SettingName } from "./types";
+import { Switch } from "../ui/Switch/Switch";
+
+import styles from "./Settings.css";
 
 type Props = {
   path: string;
@@ -37,13 +40,13 @@ const getClearedTimesValue = (value: string): number => {
 };
 
 export const Settings = (props: Props): JSX.Element => {
-  const settings = useContext(SettingsContext);
+  const { setSetting, settings } = useContext(SettingsContext);
 
   const handleChangeFocusDuration = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedDurationValue(e.currentTarget.value);
       e.currentTarget.value = `${newValue}`;
-      settings.setFocusDuration(newValue);
+      setSetting(SettingName.focusDuration, newValue);
     },
     []
   );
@@ -52,7 +55,7 @@ export const Settings = (props: Props): JSX.Element => {
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedDurationValue(e.currentTarget.value);
       e.currentTarget.value = `${newValue}`;
-      settings.setShortBreakDuration(newValue);
+      setSetting(SettingName.shortBreakDuration, newValue);
     },
     []
   );
@@ -61,7 +64,7 @@ export const Settings = (props: Props): JSX.Element => {
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedDurationValue(e.currentTarget.value);
       e.currentTarget.value = `${newValue}`;
-      settings.setLongBreakDuration(newValue);
+      setSetting(SettingName.longBreakDuration, newValue);
     },
     []
   );
@@ -70,7 +73,23 @@ export const Settings = (props: Props): JSX.Element => {
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedTimesValue(e.currentTarget.value);
       e.currentTarget.value = `${newValue}`;
-      settings.setLongBreakEvery(newValue);
+      setSetting(SettingName.longBreakEvery, newValue);
+    },
+    []
+  );
+
+  const handleChangeAutoStartBreak = useCallback(
+    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+      const newValue = e.currentTarget.checked;
+      setSetting(SettingName.autoStartBreak, newValue);
+    },
+    []
+  );
+
+  const handleChangeAutoStartNextBreak = useCallback(
+    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+      const newValue = e.currentTarget.checked;
+      setSetting(SettingName.autoStartNextFocus, newValue);
     },
     []
   );
@@ -93,7 +112,7 @@ export const Settings = (props: Props): JSX.Element => {
               className={styles.input}
               onChange={handleChangeFocusDuration}
               type="text"
-              value={settings.focusDuration}
+              value={settings[SettingName.focusDuration]}
               inputMode="numeric"
             />
           </label>
@@ -105,7 +124,7 @@ export const Settings = (props: Props): JSX.Element => {
               className={styles.input}
               onChange={handleChangeShortBreakDuration}
               type="text"
-              value={settings.shortBreakDuration}
+              value={settings[SettingName.shortBreakDuration]}
               inputMode="numeric"
             />
           </label>
@@ -117,7 +136,7 @@ export const Settings = (props: Props): JSX.Element => {
               className={styles.input}
               onChange={handleChangeLongBreakDuration}
               type="text"
-              value={settings.longBreakDuration}
+              value={settings[SettingName.longBreakDuration]}
               inputMode="numeric"
             />
           </label>
@@ -127,10 +146,31 @@ export const Settings = (props: Props): JSX.Element => {
               className={styles.input}
               onChange={handleChangeLongBreakEvery}
               type="text"
-              value={settings.longBreakEvery}
+              value={settings[SettingName.longBreakEvery]}
               inputMode="numeric"
             />
           </label>
+          <h3 className={styles.subTitle}>Auto-Start</h3>
+          <div className={styles.label}>
+            <span className={styles.labelTitle}>Break</span>
+            <Switch
+              className={styles.checkbox}
+              onChange={handleChangeAutoStartBreak}
+              aria-label={"Break"}
+              type="checkbox"
+              checked={settings[SettingName.autoStartBreak]}
+            />
+          </div>
+          <div className={styles.label}>
+            <span className={styles.labelTitle}>Next Focus</span>
+            <Switch
+              className={styles.checkbox}
+              onChange={handleChangeAutoStartNextBreak}
+              aria-label={"Next Focus"}
+              type="checkbox"
+              checked={settings[SettingName.autoStartNextFocus]}
+            />
+          </div>
         </form>
       </div>
     </>

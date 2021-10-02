@@ -5,21 +5,20 @@ import { useCallback } from "preact/hooks";
 import styles from "./App.css";
 
 import { Timer } from "./Timer";
-import { Settings } from "./Settings";
+import { Settings, useSettings, SettingsContext } from "./Settings";
 import { PATHS } from "./constants";
 
 import { settingsStorage } from "./api/settingsStorage";
-import { useSettings } from "./hooks/useSettings";
-import { SettingsContext } from "./contexts/settings";
 
 export const App = (): JSX.Element => {
-  const settings = useSettings(settingsStorage);
+  const { isReady: isReadySettings, ...settings } =
+    useSettings(settingsStorage);
 
   const handleChange = useCallback(({ url }: RouterProps) => {
     if (!Object.values(PATHS).includes(url || "")) route("/");
   }, []);
 
-  if (!settings.isReady) {
+  if (!isReadySettings) {
     return <></>;
   }
 
