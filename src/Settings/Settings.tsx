@@ -94,6 +94,26 @@ export const Settings = (props: Props): JSX.Element => {
     []
   );
 
+  const handleFocus = useCallback(
+    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+      const input = e.currentTarget;
+      const len = input.value.length;
+      setTimeout(() => {
+        input.setSelectionRange(len, len);
+      }, 0);
+    },
+    []
+  );
+
+  const handleChangeColorCircle = useCallback(
+    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+      const newValue = e.currentTarget.value;
+      e.currentTarget.value = `${newValue}`;
+      setSetting(SettingName.colorCircle, newValue);
+    },
+    []
+  );
+
   return (
     <>
       <Header>
@@ -111,6 +131,7 @@ export const Settings = (props: Props): JSX.Element => {
             <input
               className={styles.input}
               onChange={handleChangeFocusDuration}
+              onFocus={handleFocus}
               type="text"
               value={settings[SettingName.focusDuration]}
               inputMode="numeric"
@@ -123,6 +144,7 @@ export const Settings = (props: Props): JSX.Element => {
             <input
               className={styles.input}
               onChange={handleChangeShortBreakDuration}
+              onFocus={handleFocus}
               type="text"
               value={settings[SettingName.shortBreakDuration]}
               inputMode="numeric"
@@ -135,6 +157,7 @@ export const Settings = (props: Props): JSX.Element => {
             <input
               className={styles.input}
               onChange={handleChangeLongBreakDuration}
+              onFocus={handleFocus}
               type="text"
               value={settings[SettingName.longBreakDuration]}
               inputMode="numeric"
@@ -145,6 +168,7 @@ export const Settings = (props: Props): JSX.Element => {
             <input
               className={styles.input}
               onChange={handleChangeLongBreakEvery}
+              onFocus={handleFocus}
               type="text"
               value={settings[SettingName.longBreakEvery]}
               inputMode="numeric"
@@ -169,6 +193,17 @@ export const Settings = (props: Props): JSX.Element => {
               aria-label={"Next Focus"}
               type="checkbox"
               checked={settings[SettingName.autoStartNextFocus]}
+            />
+          </div>
+          <h3 className={styles.subTitle}>Colors</h3>
+          <div className={styles.label}>
+            <span className={styles.labelTitle}>Circle</span>
+            <input
+              type="color"
+              aria-label="circle color"
+              className={styles.inputColor}
+              value={settings[SettingName.colorCircle]}
+              onChange={handleChangeColorCircle}
             />
           </div>
         </form>

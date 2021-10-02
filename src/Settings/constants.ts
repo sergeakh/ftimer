@@ -6,6 +6,7 @@ export const DEFAULT_LONG_BREAK_DURATION = 20;
 export const DEFAULT_LONG_BREAK_EVERY = 4;
 export const DEFAULT_AUTO_START_BREAK = false;
 export const DEFAULT_AUTO_START_NEXT_FOCUS = false;
+export const DEFAULT_COLOR_CIRCLE = "#000000";
 
 export const defaultSettings: Readonly<Settings> = {
   [SettingName.focusDuration]: DEFAULT_FOCUS_DURATION,
@@ -14,6 +15,7 @@ export const defaultSettings: Readonly<Settings> = {
   [SettingName.longBreakEvery]: DEFAULT_LONG_BREAK_EVERY,
   [SettingName.autoStartBreak]: DEFAULT_AUTO_START_BREAK,
   [SettingName.autoStartNextFocus]: DEFAULT_AUTO_START_NEXT_FOCUS,
+  [SettingName.colorCircle]: DEFAULT_COLOR_CIRCLE,
 };
 
 export const MIN_LONG_BREAK_EVERY = 1;

@@ -16,11 +16,17 @@ type Props = {
   status: Status;
   timeLeft: number;
   timeout: number;
+  colorCircle: string;
 };
 
 const CIRCLE_TRANSITION = ".7s stroke-dashoffset linear";
 
-export const Progress = ({ status, timeLeft, timeout }: Props): JSX.Element => {
+export const Progress = ({
+  status,
+  timeLeft,
+  timeout,
+  colorCircle,
+}: Props): JSX.Element => {
   const circleRef = useRef<SVGCircleElement>(null);
 
   const handleAnimationEnd = useCallback(() => {
@@ -70,7 +76,7 @@ export const Progress = ({ status, timeLeft, timeout }: Props): JSX.Element => {
           cx="50%"
           cy="50%"
           r={RADIUS}
-          stroke="#000"
+          stroke={colorCircle}
           stroke-width="3"
           stroke-dasharray={CIRCUMFERENCE}
           stroke-dashoffset={status === Status.Start ? 0 : CIRCUMFERENCE}

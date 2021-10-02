@@ -1,5 +1,6 @@
 import { JSX } from "preact";
 
+import { useContext } from "preact/hooks";
 import { useTimer } from "./hooks/useTimer";
 import { Status } from "./types";
 
@@ -9,6 +10,7 @@ import { useTitleStatus, Status as TitleStatus } from "./hooks/useTitleStatus";
 import { useIconStatus, Status as IconStatus } from "./hooks/useIconStatus";
 import { useThrottleAnimationFrameValue } from "../../hooks/useThrottleAnimationFrameValue";
 import { SEC } from "../../utils/common";
+import { SettingsContext } from "../../Settings";
 
 type Props = {
   status: Status;
@@ -31,6 +33,7 @@ const iconStatuses = {
 export const Process = ({ status, timeout, onFinish }: Props): JSX.Element => {
   const timeLeft = useTimer(status, timeout, onFinish);
   const animationedTimeLeft = useThrottleAnimationFrameValue(timeLeft);
+  const { settings } = useContext(SettingsContext);
 
   useTitleStatus(titleStatuses[status], timeLeft);
 
@@ -41,6 +44,7 @@ export const Process = ({ status, timeout, onFinish }: Props): JSX.Element => {
       status={status}
       timeLeft={animationedTimeLeft}
       timeout={timeout}
+      colorCircle={settings.colorCircle}
     />
   );
 };

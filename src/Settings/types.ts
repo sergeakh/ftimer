@@ -5,6 +5,7 @@ export enum SettingName {
   longBreakEvery = "longBreakEvery",
   autoStartBreak = "autoStartBreak",
   autoStartNextFocus = "autoStartNextFocus",
+  colorCircle = "colorCircle",
 }
 
 export type Settings = Readonly<{
@@ -14,6 +15,7 @@ export type Settings = Readonly<{
   [SettingName.longBreakEvery]: number;
   [SettingName.autoStartBreak]: boolean;
   [SettingName.autoStartNextFocus]: boolean;
+  [SettingName.colorCircle]: string;
 }>;
 
 export type SetSetting = <T extends SettingName>(
