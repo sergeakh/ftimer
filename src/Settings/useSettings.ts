@@ -5,9 +5,18 @@ import { SettingsStorage } from "../interfaces/SettingsStorage";
 
 import { SettingName, SetSetting, Settings } from "./types";
 
-import { reducer } from "./reducer";
 import { defaultSettings } from "./constants";
 import { ISettingsContext } from "./context";
+
+type Action = { name: SettingName; value: Settings[SettingName] };
+
+export const reducer = (state: Settings, action: Action): Settings => {
+  if (Object.values(SettingName).includes(action.name)) {
+    return { ...state, [action.name]: action.value };
+  }
+
+  return state;
+};
 
 function enumKeys<
   O extends Record<string, unknown>,

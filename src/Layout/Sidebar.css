@@ -1,0 +1,44 @@
+.wrap-sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.wrap-sidebar_hidden {
+  pointer-events: none;
+}
+
+.sidebar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  will-change: opacity;
+  transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+}
+
+.sidebar-overlay_hidden {
+  opacity: 0;
+}
+
+.sidebar {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #fff;
+  will-change: transform;
+  touch-action: none;
+}
+
+.sidebar_hidden {
+  transform: translateX(-100%);
+}

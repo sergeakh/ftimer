@@ -1,11 +1,10 @@
-.link-settings {
-  background-image: url("../assets/icons/settings.svg");
-}
-
 .timer {
   margin: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin-bottom: 50px;
 }

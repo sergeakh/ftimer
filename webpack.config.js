@@ -56,7 +56,7 @@ export default (env, argv) => {
                 modules: {
                   exportLocalsConvention: "camelCase",
                   localIdentName: devMode
-                    ? "[name]-[contenthash:8]"
+                    ? "[name]-[local]-[contenthash:8]"
                     : "[contenthash:8]",
                 },
               },

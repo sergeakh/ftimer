@@ -1,0 +1,37 @@
+.menu {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+.link {
+  display: flex;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  text-decoration: none;
+  margin: 0;
+  padding: 20px;
+}
+
+.link:hover {
+  background-color: #eee;
+}
+
+.link-icon {
+  display: block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.link-title {
+  padding-left: 24px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}

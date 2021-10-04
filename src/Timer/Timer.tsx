@@ -4,13 +4,10 @@ import NoSleep from "nosleep.js";
 
 import { Process, ProcessStatus } from "./Process";
 import { ProcessControl, ProcessControlStatus } from "./ProcessControl";
-import { Header, HeaderLink } from "../ui/Header";
 
 import { getMillisecondsFromMinutes } from "../utils/common";
 import { useAlarm } from "../hooks/useAlarm";
 import { SettingsContext } from "../Settings";
-
-import { PATHS } from "../constants";
 
 import styles from "./Timer.css";
 import { SettingName } from "../Settings/types";
@@ -38,11 +35,7 @@ const processStatuses = {
   [Status.Finish]: ProcessStatus.Start,
 };
 
-type Props = {
-  path: string;
-};
-
-export const Timer = (props: Props): JSX.Element => {
+export const Timer = (): JSX.Element => {
   const { settings } = useContext(SettingsContext);
   const [status, setStatus] = useState<Status>(Status.Start);
 
@@ -98,31 +91,20 @@ export const Timer = (props: Props): JSX.Element => {
   }, []);
 
   return (
-    <>
-      <Header>
-        {status === Status.Start && (
-          <HeaderLink
-            title="Settings"
-            className={styles.linkSettings}
-            href={PATHS.settings}
-          />
+    <div class={styles.timer}>
+      <Process
+        status={processStatuses[status]}
+        timeout={getMillisecondsFromMinutes(
+          settings[SettingName.focusDuration]
         )}
-      </Header>
-      <div class={styles.timer}>
-        <Process
-          status={processStatuses[status]}
-          timeout={getMillisecondsFromMinutes(
-            settings[SettingName.focusDuration]
-          )}
-          onFinish={handleProcessFinish}
-        />
-        <ProcessControl
-          status={processControlStatuses[status]}
-          onStart={handleStart}
-          onPause={handlePause}
-          onStop={handleStop}
-        />
-      </div>
-    </>
+        onFinish={handleProcessFinish}
+      />
+      <ProcessControl
+        status={processControlStatuses[status]}
+        onStart={handleStart}
+        onPause={handlePause}
+        onStop={handleStop}
+      />
+    </div>
   );
 };

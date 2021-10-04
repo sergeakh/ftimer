@@ -1,4 +1,5 @@
 import "./configure";
+import "./main.css";
 
 import { render } from "preact";
 
