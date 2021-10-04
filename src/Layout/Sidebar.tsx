@@ -1,5 +1,11 @@
 import { JSX } from "preact";
-import { useCallback, useState, useRef, useLayoutEffect } from "preact/hooks";
+import {
+  useCallback,
+  useState,
+  useRef,
+  useLayoutEffect,
+  useEffect,
+} from "preact/hooks";
 import cn from "classnames";
 
 import styles from "./Sidebar.css";
@@ -64,6 +70,7 @@ export const Sidebar = ({
   const handleSidebarPointerDown = useCallback((e: MouseEvent) => {
     if (!asideRef.current) return;
     if (!sidebarOverlayRef.current) return;
+    if (e.currentTarget !== e.target) return;
 
     e.preventDefault();
 
@@ -135,6 +142,10 @@ export const Sidebar = ({
       sidebarShow();
     }
   }, [sidebarHidden]);
+
+  useEffect(() => {
+    handleAsideTransitionEnd();
+  }, []);
 
   return (
     <div

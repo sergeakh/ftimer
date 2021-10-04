@@ -1,6 +1,5 @@
 import { JSX } from "preact";
 import { useState, useCallback, useEffect, useContext } from "preact/hooks";
-import NoSleep from "nosleep.js";
 
 import { Process, ProcessStatus } from "./Process";
 import { ProcessControl, ProcessControlStatus } from "./ProcessControl";
@@ -8,11 +7,13 @@ import { ProcessControl, ProcessControlStatus } from "./ProcessControl";
 import { getMillisecondsFromMinutes } from "../utils/common";
 import { useAlarm } from "../hooks/useAlarm";
 import { SettingsContext } from "../Settings";
-
-import styles from "./Timer.css";
 import { SettingName } from "../Settings/types";
 
-const noSleep = new NoSleep();
+import { getNoSleep } from "../utils/noSleep";
+
+import styles from "./Timer.css";
+
+const noSleep = getNoSleep();
 
 const enum Status {
   Start,
