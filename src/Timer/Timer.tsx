@@ -13,8 +13,6 @@ import { getNoSleep } from "../utils/noSleep";
 
 import styles from "./Timer.css";
 
-const noSleep = getNoSleep();
-
 const enum Status {
   Start,
   Run,
@@ -39,6 +37,8 @@ const processStatuses = {
 export const Timer = (): JSX.Element => {
   const { settings } = useContext(SettingsContext);
   const [status, setStatus] = useState<Status>(Status.Start);
+
+  const noSleep = getNoSleep();
 
   useEffect(
     () => () => {

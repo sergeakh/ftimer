@@ -38,9 +38,6 @@ class NativeNoSleep implements INoSleep {
         this.wakeLock = wakeLock;
         this.enabled = true;
         this.wakeLock.addEventListener("release", () => {
-          // ToDo: Potentially emit an event for the page to observe since
-          // Wake Lock releases happen when page visibility changes.
-          // (https://web.dev/wakelock/#wake-lock-lifecycle)
           console.log("Wake Lock released.");
         });
       })
@@ -60,19 +57,21 @@ class NativeNoSleep implements INoSleep {
   }
 }
 
-let noSleep: INoSleep = new NativeNoSleep();
+let noSleep: INoSleep;
 
 export const initNoSleep = async (): Promise<void> => {
-  if (!nativeWakeLock()) {
-    import("nosleep.js")
-      .then((module) => {
-        const NoSleep = module.default;
-        noSleep = new NoSleep();
-      })
-      .catch((err) => {
-        console.error(`${err.name}, ${err.message}`);
-        throw err;
-      });
+  if (nativeWakeLock()) {
+    noSleep = new NativeNoSleep();
+    return;
+  }
+
+  try {
+    const module = await import("nosleep.js");
+    const NoSleep = module.default;
+    noSleep = new NoSleep();
+  } catch (err: any) {
+    console.error(`${err.name}, ${err.message}`);
+    throw err;
   }
 };
 
