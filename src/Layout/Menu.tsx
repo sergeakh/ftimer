@@ -1,5 +1,6 @@
 import { JSX } from "preact";
 import { useCallback } from "preact/hooks";
+import cn from "classnames";
 
 import styles from "./Menu.css";
 
@@ -7,6 +8,7 @@ type LinkProps = {
   title: string;
   iconSrc?: string;
   url: string;
+  isActive: boolean;
   route: (route: string) => void;
 };
 
@@ -14,12 +16,24 @@ export const Link = ({
   title,
   iconSrc,
   url,
+  isActive,
   route,
 }: LinkProps): JSX.Element => {
-  const handleClick = useCallback(() => route(url), [url]);
+  const handleClick = useCallback(
+    (e: Event) => {
+      if (isActive) e.preventDefault();
+      route(url);
+    },
+    [url]
+  );
 
   return (
-    <button className={styles.link} onClick={handleClick}>
+    <button
+      className={cn(styles.link, {
+        [styles.linkActive]: isActive,
+      })}
+      onClick={handleClick}
+    >
       {iconSrc && (
         <span
           className={styles.linkIcon}
@@ -33,13 +47,19 @@ export const Link = ({
 };
 
 type Props = Pick<LinkProps, "route"> & {
-  links: Omit<LinkProps, "route">[];
+  links: Omit<LinkProps, "route" | "isActive">[];
+  currUrl: string;
 };
 
-export const Menu = ({ links, route }: Props): JSX.Element => (
+export const Menu = ({ links, route, currUrl }: Props): JSX.Element => (
   <menu className={styles.menu}>
     {links.map((link) => (
-      <Link {...link} route={route} key={link.title} />
+      <Link
+        {...link}
+        route={route}
+        key={link.title}
+        isActive={link.url === currUrl}
+      />
     ))}
   </menu>
 );

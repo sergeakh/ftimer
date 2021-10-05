@@ -21,17 +21,23 @@ export const useTimer = (
   handleFinish: () => void
 ): number => {
   const [timeLeft, setTimeLeft] = useState(timeout);
+  const [pauseTimeLeft, setPauseTimeLeft] = useState(timeout);
 
   useEffect(() => {
     if (status !== Status.Start) return;
 
     setTimeLeft(timeout);
+    setPauseTimeLeft(0);
   }, [status, timeout]);
 
   useEffect(() => {
     if (status !== Status.Run) return noop;
 
-    const endTime = Date.now() + timeLeft;
+    const endTime = Date.now() + (pauseTimeLeft || timeLeft);
+
+    if (pauseTimeLeft) {
+      setPauseTimeLeft(0);
+    }
 
     let timerId = setWorkerTimeout(function go() {
       const now = Date.now();
@@ -42,6 +48,7 @@ export const useTimer = (
         timerId = setWorkerTimeout(go, getTimeout(now, endTime));
       } else {
         setTimeLeft(0);
+        setPauseTimeLeft(0);
         handleFinish();
       }
     }, SEC);
@@ -50,7 +57,7 @@ export const useTimer = (
       const now = Date.now();
 
       if (now < endTime) {
-        setTimeLeft(endTime - Date.now());
+        setPauseTimeLeft(endTime - Date.now());
       }
 
       clearWorkerTimeout(timerId);

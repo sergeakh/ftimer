@@ -12,20 +12,28 @@
   align-items: center;
   text-decoration: none;
   margin: 0;
-  padding: 20px;
+  padding: 16px;
+  cursor: pointer;
 }
 
 .link:hover {
   background-color: #eee;
 }
 
+.link-active,
+.link-active:hover {
+  background-color: #ddd;
+  cursor: default;
+}
+
 .link-icon {
   display: block;
   background-repeat: no-repeat;
   background-position: center center;
+  background-size: 22px 22px;
   margin: 0;
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
 }
 
 .link-title {

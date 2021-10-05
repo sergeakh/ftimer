@@ -67,62 +67,68 @@ export const Sidebar = ({
     setSidebarHiddenLocal(true);
   }, []);
 
-  const handleSidebarPointerDown = useCallback((e: MouseEvent) => {
-    if (!asideRef.current) return;
-    if (!sidebarOverlayRef.current) return;
-    if (e.currentTarget !== e.target) return;
+  const handleSidebarPointerDown: JSX.PointerEventHandler<HTMLElement> =
+    useCallback((e) => {
+      if (!asideRef.current) return;
+      if (!sidebarOverlayRef.current) return;
+      if (
+        ["button", "a"].includes(
+          (e.target as HTMLElement)?.nodeName?.toLowerCase?.() || ""
+        )
+      )
+        return;
 
-    e.preventDefault();
+      e.preventDefault();
 
-    const aside = asideRef.current;
-    const sidebarOverlay = sidebarOverlayRef.current;
+      const aside = asideRef.current;
+      const sidebarOverlay = sidebarOverlayRef.current;
 
-    let left = 0;
+      let left = 0;
 
-    const shiftX = e.clientX - aside.getBoundingClientRect().left;
+      const shiftX = e.clientX - aside.getBoundingClientRect().left;
 
-    function moveAt(pageX: number) {
-      left = Math.min(pageX - shiftX, 0);
-      aside.style.transform = `translateX(${left}px)`;
-      sidebarOverlay.style.opacity = `${1 - Math.abs(left) / SIDEBAR_WIDTH}`;
-    }
-
-    moveAt(e.pageX);
-
-    function onPointerMove(event: MouseEvent) {
-      moveAt(event.pageX);
-    }
-
-    document.addEventListener("pointermove", onPointerMove);
-
-    document.addEventListener("pointerup", function onPointerUp() {
-      aside.style.transform = "";
-      sidebarOverlay.style.opacity = "";
-
-      if (SIDEBAR_WIDTH - Math.abs(left) < SIDEBAR_WIDTH / 2) {
-        const transitionTime =
-          (HIDE_TRANSITION_TIME * (SIDEBAR_WIDTH - Math.abs(left))) /
-          SIDEBAR_WIDTH;
-
-        if (transitionTime > 0) {
-          aside.style.transition = getHideTransition(transitionTime);
-        }
-
-        onSidebarHide();
-      } else {
-        const transitionTime =
-          (SHOW_TRANSITION_TIME * Math.abs(left)) / SIDEBAR_WIDTH;
-        if (transitionTime > 0) {
-          aside.style.transition = getShowTransition(transitionTime);
-        }
-
-        onSidebarShow();
+      function moveAt(pageX: number) {
+        left = Math.min(pageX - shiftX, 0);
+        aside.style.transform = `translateX(${left}px)`;
+        sidebarOverlay.style.opacity = `${1 - Math.abs(left) / SIDEBAR_WIDTH}`;
       }
 
-      document.removeEventListener("pointermove", onPointerMove);
-      document.removeEventListener("pointerup", onPointerUp);
-    });
-  }, []);
+      moveAt(e.pageX);
+
+      function onPointerMove(event: MouseEvent) {
+        moveAt(event.pageX);
+      }
+
+      document.addEventListener("pointermove", onPointerMove);
+
+      document.addEventListener("pointerup", function onPointerUp() {
+        aside.style.transform = "";
+        sidebarOverlay.style.opacity = "";
+
+        if (SIDEBAR_WIDTH - Math.abs(left) < SIDEBAR_WIDTH / 2) {
+          const transitionTime =
+            (HIDE_TRANSITION_TIME * (SIDEBAR_WIDTH - Math.abs(left))) /
+            SIDEBAR_WIDTH;
+
+          if (transitionTime > 0) {
+            aside.style.transition = getHideTransition(transitionTime);
+          }
+
+          onSidebarHide();
+        } else {
+          const transitionTime =
+            (SHOW_TRANSITION_TIME * Math.abs(left)) / SIDEBAR_WIDTH;
+          if (transitionTime > 0) {
+            aside.style.transition = getShowTransition(transitionTime);
+          }
+
+          onSidebarShow();
+        }
+
+        document.removeEventListener("pointermove", onPointerMove);
+        document.removeEventListener("pointerup", onPointerUp);
+      });
+    }, []);
 
   const handleSidebarDragStart = useCallback(
     (e: Event) => e.preventDefault(),

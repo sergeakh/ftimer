@@ -53,7 +53,10 @@ export const App = (): JSX.Element => {
 
   return (
     <SettingsContext.Provider value={settings}>
-      <Layout page={page} sidebar={<Menu links={MenuLinks} route={route} />}>
+      <Layout
+        page={page}
+        sidebar={<Menu links={MenuLinks} route={route} currUrl={page} />}
+      >
         <>
           {page === Pages.timer && <Timer />}
           {page === Pages.settings && <Settings />}

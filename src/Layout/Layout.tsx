@@ -37,7 +37,10 @@ export const Layout = ({ children, sidebar, page }: Props): JSX.Element => {
         onSidebarShow={handleSidebarShow}
         onSidebarHide={handleSidebarHide}
       >
-        {sidebar}
+        <>
+          <Header onClickMenu={handleSidebarHide}></Header>
+          {sidebar}
+        </>
       </Sidebar>
       <section className={styles.mainSection}>
         <Header onClickMenu={handleSidebarShow}></Header>
