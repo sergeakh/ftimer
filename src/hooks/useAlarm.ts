@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useRef } from "preact/hooks";
 import { isIOS } from "../utils/browser";
 
-import { noop } from "../utils/common";
-
 import src from "../assets/alarm.mp3";
 
 type AudioObj = {
@@ -11,10 +9,7 @@ type AudioObj = {
   elem: HTMLAudioElement;
 };
 
-export const useAlarm = (
-  enabled: boolean,
-  handleFinish: () => void
-): (() => void) => {
+export const useAlarm = (enabled: boolean): (() => void) => {
   const audioObj = useRef<AudioObj>(null);
 
   useEffect(() => {
@@ -48,11 +43,13 @@ export const useAlarm = (
         audioElem.muted = false;
       }
 
+      audioElem.src = src;
+      ganiNode.gain.value = 0;
+
       if (isIOS()) {
         audioElem.play();
+        audioElem.pause();
       }
-
-      audioElem.src = src;
 
       ganiNode.gain.value = 1;
     }
@@ -70,16 +67,6 @@ export const useAlarm = (
       }
     }
   }, [enabled]);
-
-  useEffect(() => {
-    if (!audioObj.current) return noop;
-
-    audioObj.current.elem.addEventListener("ended", handleFinish);
-
-    return () => {
-      audioObj.current?.elem.removeEventListener("ended", handleFinish);
-    };
-  }, [handleFinish]);
 
   return init;
 };

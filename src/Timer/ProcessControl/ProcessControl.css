@@ -1,10 +1,14 @@
+.wrapper {
+  height: 83px;
+  margin-top: 40px;
+}
+
 .process-control {
   width: 100%;
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 40px;
 }
 
 .btn-icon {

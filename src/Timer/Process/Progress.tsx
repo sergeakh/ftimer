@@ -7,6 +7,8 @@ import { Status } from "./types";
 
 import { getСircumference } from "./common";
 
+import { CIRCLE_RESTORE_TIME } from "../constants";
+
 import styles from "./Progress.css";
 
 const RADIUS = 22;
@@ -19,7 +21,7 @@ type Props = {
   colorCircle: string;
 };
 
-const CIRCLE_TRANSITION = ".7s stroke-dashoffset linear";
+const CIRCLE_TRANSITION = `${CIRCLE_RESTORE_TIME}ms stroke-dashoffset linear`;
 
 export const Progress = ({
   status,

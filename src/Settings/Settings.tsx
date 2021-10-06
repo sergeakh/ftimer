@@ -52,6 +52,14 @@ export const Settings = (): JSX.Element => {
     []
   );
 
+  const handleChangeLongBreak = useCallback(
+    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+      const newValue = e.currentTarget.checked;
+      setSetting(SettingName.longBreak, newValue);
+    },
+    []
+  );
+
   const handleChangeLongBreakDuration = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedDurationValue(e.currentTarget.value);
@@ -132,28 +140,47 @@ export const Settings = (): JSX.Element => {
             inputMode="numeric"
           />
         </label>
-        <label className={styles.label}>
-          <span className={styles.labelTitle}>Long Break Duration (mins)</span>
-          <input
-            className={styles.input}
-            onChange={handleChangeLongBreakDuration}
-            onFocus={handleFocus}
-            type="text"
-            value={settings[SettingName.longBreakDuration]}
-            inputMode="numeric"
+        <div className={styles.label}>
+          <span className={styles.labelTitle}>Long Break</span>
+          <Switch
+            className={styles.checkbox}
+            onChange={handleChangeLongBreak}
+            aria-label={"Long Break"}
+            type="checkbox"
+            checked={settings[SettingName.longBreak]}
           />
-        </label>
-        <label className={styles.label}>
-          <span className={styles.labelTitle}>Long Break Every (times)</span>
-          <input
-            className={styles.input}
-            onChange={handleChangeLongBreakEvery}
-            onFocus={handleFocus}
-            type="text"
-            value={settings[SettingName.longBreakEvery]}
-            inputMode="numeric"
-          />
-        </label>
+        </div>
+        {settings[SettingName.longBreak] && (
+          <>
+            <label className={styles.label}>
+              <span className={styles.labelTitle}>
+                Long Break Duration (mins)
+              </span>
+              <input
+                className={styles.input}
+                onChange={handleChangeLongBreakDuration}
+                onFocus={handleFocus}
+                type="text"
+                value={settings[SettingName.longBreakDuration]}
+                inputMode="numeric"
+              />
+            </label>
+            <label className={styles.label}>
+              <span className={styles.labelTitle}>
+                Long Break Every (times)
+              </span>
+              <input
+                className={styles.input}
+                onChange={handleChangeLongBreakEvery}
+                onFocus={handleFocus}
+                type="text"
+                value={settings[SettingName.longBreakEvery]}
+                inputMode="numeric"
+              />
+            </label>
+          </>
+        )}
+
         <h3 className={styles.subTitle}>Auto-Start</h3>
         <div className={styles.label}>
           <span className={styles.labelTitle}>Break</span>

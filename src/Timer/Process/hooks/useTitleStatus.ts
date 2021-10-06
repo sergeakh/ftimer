@@ -3,17 +3,13 @@ import { isMobile } from "../../../utils/browser";
 
 import { formatTime, normalizeTime } from "../../../utils/common";
 
+const DEFAULT_TITLE = document.title;
+
 export const enum Status {
   Start,
   Run,
   Pause,
 }
-
-const Statuses = {
-  [Status.Start]: document.title,
-  [Status.Run]: "- Working",
-  [Status.Pause]: "- Pause",
-};
 
 export const setTitle = (title: string): void => {
   document.title = title;
@@ -25,10 +21,25 @@ export const getFirstPartTitle = (status: Status, timeLeft: number): string => {
   return `${formatTime(normalizeTime(timeLeft))} `;
 };
 
-export const useTitleStatus = (status: Status, timeLeft: number): void => {
+const getSecondPartTitle = (status: Status, timerIntervalName: string) => {
+  if (status === Status.Start) return DEFAULT_TITLE;
+
+  return ` - ${timerIntervalName}`;
+};
+
+export const useTitleStatus = (
+  status: Status,
+  timerIntervalName: string,
+  timeLeft: number
+): void => {
   if (isMobile()) return;
 
   useEffect(() => {
-    setTitle(`${getFirstPartTitle(status, timeLeft)}${Statuses[status]}`);
+    setTitle(
+      `${getFirstPartTitle(status, timeLeft)}${getSecondPartTitle(
+        status,
+        timerIntervalName
+      )}`
+    );
   }, [status, timeLeft]);
 };

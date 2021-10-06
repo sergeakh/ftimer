@@ -29,9 +29,8 @@ export const Link = ({
 
   return (
     <button
-      className={cn(styles.link, {
-        [styles.linkActive]: isActive,
-      })}
+      className={cn(styles.link)}
+      disabled={isActive}
       onClick={handleClick}
     >
       {iconSrc && (

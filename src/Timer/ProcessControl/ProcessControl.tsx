@@ -14,6 +14,7 @@ export const enum Status {
   Start,
   Run,
   Pause,
+  Another,
 }
 
 const buttonMainTitles = {
@@ -37,23 +38,27 @@ export const ProcessControl = ({
   onPause,
   onStop,
 }: Props): JSX.Element => (
-  <div className={styles.processControl}>
-    <ButtonBase
-      title={buttonMainTitles[status]}
-      color={status === Status.Run ? "secondary" : "primary"}
-      className={cn(styles.btnIcon, {
-        [styles.btnStart]: [Status.Start, Status.Pause].includes(status),
-        [styles.btnPause]: status === Status.Run,
-      })}
-      onClick={status === Status.Run ? onPause : onStart}
-    />
-    {status === Status.Pause && (
-      <ButtonBase
-        title={BUTTON_STOP_TITLE}
-        color="secondary"
-        className={cn(styles.btnIcon, styles.btnStop)}
-        onClick={onStop}
-      />
+  <div className={styles.wrapper}>
+    {status !== Status.Another && (
+      <div className={styles.processControl}>
+        <ButtonBase
+          title={buttonMainTitles[status]}
+          color={status === Status.Run ? "secondary" : "primary"}
+          className={cn(styles.btnIcon, {
+            [styles.btnStart]: [Status.Start, Status.Pause].includes(status),
+            [styles.btnPause]: status === Status.Run,
+          })}
+          onClick={status === Status.Run ? onPause : onStart}
+        />
+        {status === Status.Pause && (
+          <ButtonBase
+            title={BUTTON_STOP_TITLE}
+            color="secondary"
+            className={cn(styles.btnIcon, styles.btnStop)}
+            onClick={onStop}
+          />
+        )}
+      </div>
     )}
   </div>
 );

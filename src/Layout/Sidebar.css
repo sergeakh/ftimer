@@ -42,3 +42,8 @@
 .sidebar_hidden {
   transform: translateX(-100%);
 }
+
+.lock-scroll {
+  position: fixed;
+  overflow: hidden;
+}

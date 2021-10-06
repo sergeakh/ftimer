@@ -20,8 +20,8 @@
   background-color: #eee;
 }
 
-.link-active,
-.link-active:hover {
+.link:disabled,
+.link:disabled:hover {
   background-color: #ddd;
   cursor: default;
 }

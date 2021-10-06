@@ -14,6 +14,7 @@ import { SettingsContext } from "../../Settings";
 
 type Props = {
   status: Status;
+  timerIntervalName: string;
   timeout: number;
   onFinish: () => void;
 };
@@ -30,12 +31,17 @@ const iconStatuses = {
   [Status.Pause]: IconStatus.Pause,
 };
 
-export const Process = ({ status, timeout, onFinish }: Props): JSX.Element => {
+export const Process = ({
+  status,
+  timerIntervalName,
+  timeout,
+  onFinish,
+}: Props): JSX.Element => {
   const timeLeft = useTimer(status, timeout, onFinish);
   const animationedTimeLeft = useThrottleAnimationFrameValue(timeLeft);
   const { settings } = useContext(SettingsContext);
 
-  useTitleStatus(titleStatuses[status], timeLeft);
+  useTitleStatus(titleStatuses[status], timerIntervalName, timeLeft);
 
   useIconStatus(iconStatuses[status], timeLeft - SEC, timeout);
 
