@@ -38,7 +38,10 @@ export const Layout = ({ children, sidebar, page }: Props): JSX.Element => {
         onSidebarHide={handleSidebarHide}
       >
         <>
-          <Header onClickMenu={handleSidebarHide}></Header>
+          <Header
+            autoFocusMenu={!sidebarHidden}
+            onClickMenu={handleSidebarHide}
+          ></Header>
           {sidebar}
         </>
       </Sidebar>

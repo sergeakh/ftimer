@@ -72,7 +72,7 @@ export const Sidebar = ({
       if (!asideRef.current) return;
       if (!sidebarOverlayRef.current) return;
       if (
-        ["button", "a"].includes(
+        ["button", "a", "input"].includes(
           (e.target as HTMLElement)?.nodeName?.toLowerCase?.() || ""
         )
       )
@@ -169,7 +169,7 @@ export const Sidebar = ({
       <aside
         ref={asideRef}
         onTransitionEnd={handleAsideTransitionEnd}
-        onPointerDownCapture={handleSidebarPointerDown}
+        onPointerDown={handleSidebarPointerDown}
         onDragStart={handleSidebarDragStart}
         style={`width: ${SIDEBAR_WIDTH}px`}
         className={cn(styles.sidebar, {

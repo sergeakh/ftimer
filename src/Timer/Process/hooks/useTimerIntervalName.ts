@@ -1,4 +1,4 @@
-import { ETimerInterval } from "../types";
+import { ETimerInterval } from "../../types";
 
 const timerIntervalNames = {
   [ETimerInterval.Focus]: "Focus",

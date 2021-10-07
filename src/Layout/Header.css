@@ -14,3 +14,9 @@
   height: 48px;
   cursor: pointer;
 }
+
+@media (prefers-color-scheme: dark) {
+  .menu-button {
+    filter: invert(1);
+  }
+}

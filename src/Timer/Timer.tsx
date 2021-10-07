@@ -1,11 +1,5 @@
 import { JSX } from "preact";
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-  useMemo,
-} from "preact/hooks";
+import { useState, useCallback, useEffect, useMemo } from "preact/hooks";
 
 import { Process, ProcessStatus } from "./Process";
 import { ProcessControl, ProcessControlStatus } from "./ProcessControl";
@@ -14,7 +8,6 @@ import { TimerInterval, Status as TimerIntervalStatus } from "./TimerInterval";
 import { getMillisecondsFromMinutes, noop } from "../utils/common";
 import { useAlarm } from "../hooks/useAlarm";
 import { ETimerInterval } from "./types";
-import { SettingsContext } from "../Settings";
 import { SettingName } from "../Settings/types";
 import { useTimerInterval } from "./hooks/useTimerInterval";
 import {
@@ -25,7 +18,7 @@ import {
   useTimerIntervalsTimes,
   Status as TimerIntervalsTimesStatus,
 } from "./hooks/useTimerIntervalsTimes";
-import { useIntervalName } from "./hooks/useTimerIntervalName";
+import { useSettings } from "../Settings/useSettings";
 
 import { CIRCLE_RESTORE_TIME } from "./constants";
 
@@ -88,7 +81,7 @@ const autoChangeTimerIntervalStatuses = {
 };
 
 export const Timer = (): JSX.Element => {
-  const { settings } = useContext(SettingsContext);
+  const { getSetting } = useSettings();
   const [status, setStatus] = useState<Status>(Status.Start);
 
   const [timerInterval, setTimerInterval] = useTimerInterval();
@@ -158,8 +151,6 @@ export const Timer = (): JSX.Element => {
     setTimerInterval
   );
 
-  const timerIntervalName = useIntervalName(timerInterval);
-
   const handleManualChangeTimerInterval: typeof setTimerInterval = useCallback(
     (newTimeInterval) => {
       timerIntervalsTimes.init();
@@ -170,11 +161,11 @@ export const Timer = (): JSX.Element => {
 
   const timeout = useMemo(() => {
     if (timerInterval === ETimerInterval.Focus)
-      return settings[SettingName.focusDuration];
+      return getSetting(SettingName.focusDuration);
     if (timerInterval === ETimerInterval.ShortBreak)
-      return settings[SettingName.shortBreakDuration];
+      return getSetting(SettingName.shortBreakDuration);
     if (timerInterval === ETimerInterval.LongBreak)
-      return settings[SettingName.longBreakDuration];
+      return getSetting(SettingName.longBreakDuration);
     return 0;
   }, [timerInterval]);
 
@@ -196,10 +187,10 @@ export const Timer = (): JSX.Element => {
     if (status === Status.FinishEnd) {
       if (
         (timerInterval === ETimerInterval.Focus &&
-          settings[SettingName.autoStartNextFocus]) ||
+          getSetting(SettingName.autoStartNextFocus)) ||
         ((timerInterval === ETimerInterval.ShortBreak ||
           timerInterval === ETimerInterval.LongBreak) &&
-          settings[SettingName.autoStartBreak])
+          getSetting(SettingName.autoStartBreak))
       ) {
         const timerId = setTimeout(() => {
           setStatus(Status.AutoStart);
@@ -226,13 +217,13 @@ export const Timer = (): JSX.Element => {
     <div class={styles.timer}>
       <TimerInterval
         status={timerIntervalStatuses[status]}
-        isLongBreak={settings[SettingName.longBreak]}
+        isLongBreak={getSetting(SettingName.longBreak)}
         timerInterval={timerInterval}
         onChangeTimerInterval={handleManualChangeTimerInterval}
       />
       <Process
         status={processStatuses[status]}
-        timerIntervalName={timerIntervalName}
+        timerInterval={timerInterval}
         timeout={
           status === Status.FinishStart || status === Status.FinishEnd
             ? 0

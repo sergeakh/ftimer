@@ -18,6 +18,7 @@ type Props = {
   status: Status;
   timeLeft: number;
   timeout: number;
+  colorBackgoundCircle: string;
   colorCircle: string;
 };
 
@@ -27,6 +28,7 @@ export const Progress = ({
   status,
   timeLeft,
   timeout,
+  colorBackgoundCircle,
   colorCircle,
 }: Props): JSX.Element => {
   const circleRef = useRef<SVGCircleElement>(null);
@@ -66,7 +68,7 @@ export const Progress = ({
           cx="50%"
           cy="50%"
           r={RADIUS}
-          stroke="#00000011"
+          stroke={colorBackgoundCircle}
           stroke-width="3"
           fill="transparent"
         />

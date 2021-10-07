@@ -2,7 +2,9 @@ import { JSX } from "preact";
 import { useCallback, useEffect, useState } from "preact/hooks";
 
 import { Timer } from "./Timer";
-import { Settings, useSettings, SettingsContext } from "./Settings";
+import { Settings } from "./Settings";
+import { useSettingsStorage } from "./Settings/useSettingsStorage";
+import { SettingsContext } from "./Settings/context";
 
 import { settingsStorage } from "./api/settingsStorage";
 import { Layout } from "./Layout";
@@ -11,6 +13,7 @@ import { Menu } from "./Layout/Menu";
 import iconCircleSrc from "./assets/icons/circle.svg";
 import iconSettingsSrc from "./assets/icons/settings.svg";
 import { initNoSleep } from "./utils/noSleep";
+import { ColorSchemeSwitcher } from "./ColorSchemeSwitcher/ColorSchemeSwitcher";
 
 const Pages = {
   timer: "Timer",
@@ -35,7 +38,7 @@ export const App = (): JSX.Element => {
   const [isDepsLoading, setIsDepsLoading] = useState(true);
 
   const { isReady: isReadySettings, ...settings } =
-    useSettings(settingsStorage);
+    useSettingsStorage(settingsStorage);
 
   const route = useCallback((newPage: string) => {
     setPage(newPage);
@@ -55,7 +58,12 @@ export const App = (): JSX.Element => {
     <SettingsContext.Provider value={settings}>
       <Layout
         page={page}
-        sidebar={<Menu links={MenuLinks} route={route} currUrl={page} />}
+        sidebar={
+          <>
+            <Menu links={MenuLinks} route={route} currUrl={page} />
+            <ColorSchemeSwitcher />
+          </>
+        }
       >
         <>
           {page === Pages.timer && <Timer />}

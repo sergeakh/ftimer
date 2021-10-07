@@ -2,6 +2,9 @@ import { useEffect } from "preact/hooks";
 import { isMobile } from "../../../utils/browser";
 
 import { formatTime, normalizeTime } from "../../../utils/common";
+import { ETimerInterval } from "../../types";
+
+import { useIntervalName } from "./useTimerIntervalName";
 
 const DEFAULT_TITLE = document.title;
 
@@ -29,10 +32,12 @@ const getSecondPartTitle = (status: Status, timerIntervalName: string) => {
 
 export const useTitleStatus = (
   status: Status,
-  timerIntervalName: string,
+  timerInterval: ETimerInterval,
   timeLeft: number
 ): void => {
   if (isMobile()) return;
+
+  const timerIntervalName = useIntervalName(timerInterval);
 
   useEffect(() => {
     setTitle(

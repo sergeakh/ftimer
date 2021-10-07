@@ -1,6 +1,6 @@
 const ua = navigator.userAgent;
 
-export const isIOS = () =>
+export const isIOS = (): boolean =>
   [
     "iPad Simulator",
     "iPhone Simulator",
@@ -11,4 +11,4 @@ export const isIOS = () =>
   ].includes(navigator.platform) ||
   (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
-export const isMobile = () => /Mobile|Android|iP(hone|od)/.test(ua);
+export const isMobile = (): boolean => /Mobile|Android|iP(hone|od)/.test(ua);

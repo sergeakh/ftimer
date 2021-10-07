@@ -1,15 +1,19 @@
 .wrapper {
-  display: block;
-  height: 48px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex: 1 1 auto;
+  flex-direction: column-reverse;
 }
 
-@media (max-width: 399px) {
+@media (max-width: 419px) {
   .wrapper {
+    margin-top: 20px;
     margin-bottom: 20px;
   }
 }
 
-@media (min-width: 400px) {
+@media (min-width: 420px) {
   .wrapper {
     margin-bottom: 40px;
   }
@@ -27,6 +31,7 @@
   border: 2px solid #000;
   background-color: transparent;
   padding: 2px;
+  width: 130px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,43 +41,77 @@
 }
 
 .switcher-button {
+  appearance: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 30px;
-  padding: 20px 10px 20px 10px;
-  height: 30px;
+  border-radius: 40px;
+  height: 40px;
+  width: 40px;
   color: #000;
   cursor: pointer;
-  transition: color 160ms ease-in;
+  background-size: 18px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: filter color 160ms ease-in;
+}
+
+.switcher-button:focus-visible {
+  outline: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  .switcher-button {
+  .switcher {
     color: #fff;
   }
 }
 
-@media (max-width: 419px) {
-  .switcher-button {
-    width: 80px;
-  }
-}
-
-@media (min-width: 420px) {
-  .switcher-button {
-    width: 100px;
-  }
-}
-
-input:checked + .switcher-button {
-  cursor: default;
-  color: #fff;
+.light {
+  background-image: url("../assets/icons/sun.svg");
 }
 
 @media (prefers-color-scheme: dark) {
-  input:checked + .switcher-button {
-    color: #000;
+  .light {
+    filter: invert(1);
+  }
+}
+
+.auto {
+  background-image: url("../assets/icons/a.svg");
+  background-size: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .auto {
+    filter: invert(1);
+  }
+}
+
+.dark {
+  background-image: url("../assets/icons/moon.svg");
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark {
+    filter: invert(1);
+  }
+
+  .switcher-button:checked > .dark {
+    filter: invert(0);
+  }
+}
+
+.switcher-button:checked {
+  cursor: default;
+  color: #fff;
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .switcher-button:checked {
+    filter: invert(0);
   }
 }
 
@@ -85,7 +124,7 @@ input:checked + .switcher-button {
   right: 0;
   background-color: transparent;
   pointer-events: none;
-  border-radius: 30px;
+  border-radius: 40px;
   z-index: -1;
 }
 
@@ -103,10 +142,11 @@ input:focus-visible ~ .wrap-switcher-status {
 .switcher-status {
   display: flex;
   height: 40px;
-  border-radius: 30px;
+  width: 40px;
+  border-radius: 40px;
   position: absolute;
   top: 2px;
-  left: 2px;
+  left: 3px;
   background-color: #000;
   transition: transform 160ms ease-in;
 }
@@ -117,26 +157,14 @@ input:focus-visible ~ .wrap-switcher-status {
   }
 }
 
-@media (max-width: 419px) {
-  .switcher-status {
-    width: 80px;
-  }
-}
-
-@media (min-width: 420px) {
-  .switcher-status {
-    width: 100px;
-  }
-}
-
-#focus:checked ~ .wrap-switcher-status > .switcher-status {
+.light:checked ~ .wrap-switcher-status > .switcher-status {
   transform: translateX(0);
 }
 
-#shortBreak:checked ~ .wrap-switcher-status > .switcher-status {
+.auto:checked ~ .wrap-switcher-status > .switcher-status {
   transform: translateX(100%);
 }
 
-#longBreak:checked ~ .wrap-switcher-status > .switcher-status {
+.dark:checked ~ .wrap-switcher-status > .switcher-status {
   transform: translateX(200%);
 }

@@ -17,6 +17,12 @@
   background-color: #ccc;
 }
 
+@media (prefers-color-scheme: dark) {
+  .slider {
+    background-color: #717171;
+  }
+}
+
 .slider:before {
   position: absolute;
   content: "";
@@ -29,13 +35,31 @@
   border-radius: 50%;
 }
 
+@media (prefers-color-scheme: dark) {
+  .slider:before {
+    background-color: #181818;
+  }
+}
+
 input:checked + .slider {
   background-color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  input:checked + .slider {
+    background-color: #fff;
+  }
 }
 
 input:focus-visible + .slider {
   outline: 2px solid #000;
   outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  input:focus-visible + .slider {
+    outline-color: #fff;
+  }
 }
 
 input:checked + .slider:before {

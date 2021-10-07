@@ -1,6 +1,16 @@
 .wrapper {
   height: 83px;
-  margin-top: 40px;
+}
+
+@media (max-width: 399px) {
+  .wrapper {
+    margin-top: 20px;
+  }
+}
+@media (min-width: 400px) {
+  .wrapper {
+    margin-top: 40px;
+  }
 }
 
 .process-control {
@@ -54,6 +64,12 @@
   border-bottom: 8px solid transparent;
 }
 
+@media (prefers-color-scheme: dark) {
+  .btn-start::before {
+    border-left-color: #000;
+  }
+}
+
 .btn-pause::before {
   width: 16px;
   height: 16px;
@@ -61,8 +77,21 @@
   border-right: 5px solid #000;
 }
 
+@media (prefers-color-scheme: dark) {
+  .btn-pause::before {
+    border-left-color: #fff;
+    border-right-color: #fff;
+  }
+}
+
 .btn-stop::before {
   width: 16px;
   height: 16px;
   background-color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn-stop::before {
+    background-color: #fff;
+  }
 }

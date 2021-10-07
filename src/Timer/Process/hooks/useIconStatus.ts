@@ -1,8 +1,10 @@
 import { useCallback, useEffect } from "preact/hooks";
 
 import { isMobile } from "../../../utils/browser";
+import { ETimerInterval } from "../../types";
 
 import { getProgress, getСircumference } from "../common";
+import { useCircleColor } from "./useCircleColor";
 
 export const enum Status {
   Start,
@@ -21,6 +23,8 @@ const icon = document.createElement("link");
 icon.rel = "shortcut icon";
 
 const createIcon = (
+  circleColor: string,
+  circleBackgroundColor: string,
   timeLeft: number,
   timeout: number
 ): string => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
@@ -29,21 +33,13 @@ const createIcon = (
       transform: rotate(-90deg);
       transform-origin: 50% 50%;
     }
-    @media (prefers-color-scheme:dark){
-      .circle1 {
-        stroke:#ffffff33
-      }
-      .circle2 {
-        stroke:#ffffff
-      }
-    }
     </style>
   <circle
     class="circle circle1"
     cx="25"
     cy="25"
     r="${RADIUS}"
-    stroke="#00000033"
+    stroke="${circleBackgroundColor}"
     stroke-width="10"
     fill="transparent"
   />
@@ -52,7 +48,7 @@ const createIcon = (
     cx="25"
     cy="25"
     r="${RADIUS}"
-    stroke="#000"
+    stroke="${circleColor}"
     stroke-width="10"
     stroke-dasharray="${CIRCUMFERENCE}"
     stroke-dashoffset="${getProgress(CIRCUMFERENCE, timeLeft / timeout)}"
@@ -65,10 +61,16 @@ const createBlob = (svg: string): Blob =>
 
 export const useIconStatus = (
   status: Status,
+  timerInterval: ETimerInterval,
   timeLeft: number,
   timeout: number
 ): void => {
   if (isMobile()) return;
+
+  const [circleColor, circleBackgroundColor] = useCircleColor({
+    timerInterval,
+    ignoreColorSchemeChoise: true,
+  });
 
   useEffect(() => {
     if (!iconDefault) return;
@@ -99,6 +101,12 @@ export const useIconStatus = (
       return;
     }
 
-    showIcon(URL.createObjectURL(createBlob(createIcon(timeLeft, timeout))));
+    showIcon(
+      URL.createObjectURL(
+        createBlob(
+          createIcon(circleColor, circleBackgroundColor, timeLeft, timeout)
+        )
+      )
+    );
   }, [status, timeLeft]);
 };

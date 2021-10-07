@@ -42,6 +42,7 @@
     "mini-css-extract-plugin": "^2.3.0",
     "postcss": "^8.3.8",
     "postcss-csso": "^5.0.1",
+    "postcss-dark-theme-class": "^0.7.2",
     "postcss-import": "^14.0.2",
     "postcss-loader": "^6.1.1",
     "prettier": "^2.4.1",
@@ -60,7 +61,11 @@
     "plugins": {
       "postcss-import": {},
       "autoprefixer": {},
-      "postcss-csso": {}
+      "postcss-csso": {},
+      "postcss-dark-theme-class": {
+        "darkSelector": "[data-color-scheme=\"dark\"]",
+        "lightSelector": "[data-color-scheme=\"light\"]"
+      }
     }
   },
   "stylelint": {

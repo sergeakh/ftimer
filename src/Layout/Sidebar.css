@@ -28,6 +28,9 @@
 }
 
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   position: absolute;
   margin: 0;
   padding: 0;
@@ -37,6 +40,12 @@
   background-color: #fff;
   will-change: transform;
   touch-action: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background-color: var(--background-color);
+  }
 }
 
 .sidebar_hidden {

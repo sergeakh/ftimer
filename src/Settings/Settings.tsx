@@ -1,15 +1,19 @@
 import { JSX } from "preact";
-import { useCallback, useContext } from "preact/hooks";
+import { useCallback } from "preact/hooks";
 
-import { SettingsContext } from "./context";
 import {
   MAX_DURATION,
   MAX_LONG_BREAK_EVERY,
   MIN_DURATION,
   MIN_LONG_BREAK_EVERY,
 } from "./constants";
+
 import { SettingName } from "./types";
 import { Switch } from "../ui/Switch/Switch";
+
+import { CircleColors } from "./CircleColors";
+
+import { useSettings } from "./useSettings";
 
 import styles from "./Settings.css";
 
@@ -32,7 +36,7 @@ const getClearedTimesValue = (value: string): number => {
 };
 
 export const Settings = (): JSX.Element => {
-  const { setSetting, settings } = useContext(SettingsContext);
+  const { setSetting, getSetting } = useSettings();
 
   const handleChangeFocusDuration = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
@@ -105,15 +109,6 @@ export const Settings = (): JSX.Element => {
     []
   );
 
-  const handleChangeColorCircle = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = e.currentTarget.value;
-      e.currentTarget.value = `${newValue}`;
-      setSetting(SettingName.colorCircle, newValue);
-    },
-    []
-  );
-
   return (
     <div className={styles.settings}>
       <h2 className={styles.title}>Settings</h2>
@@ -125,7 +120,7 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeFocusDuration}
             onFocus={handleFocus}
             type="text"
-            value={settings[SettingName.focusDuration]}
+            value={getSetting(SettingName.focusDuration)}
             inputMode="numeric"
           />
         </label>
@@ -136,7 +131,7 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeShortBreakDuration}
             onFocus={handleFocus}
             type="text"
-            value={settings[SettingName.shortBreakDuration]}
+            value={getSetting(SettingName.shortBreakDuration)}
             inputMode="numeric"
           />
         </label>
@@ -147,10 +142,10 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeLongBreak}
             aria-label={"Long Break"}
             type="checkbox"
-            checked={settings[SettingName.longBreak]}
+            checked={getSetting(SettingName.longBreak)}
           />
         </div>
-        {settings[SettingName.longBreak] && (
+        {getSetting(SettingName.longBreak) && (
           <>
             <label className={styles.label}>
               <span className={styles.labelTitle}>
@@ -161,7 +156,7 @@ export const Settings = (): JSX.Element => {
                 onChange={handleChangeLongBreakDuration}
                 onFocus={handleFocus}
                 type="text"
-                value={settings[SettingName.longBreakDuration]}
+                value={getSetting(SettingName.longBreakDuration)}
                 inputMode="numeric"
               />
             </label>
@@ -174,13 +169,12 @@ export const Settings = (): JSX.Element => {
                 onChange={handleChangeLongBreakEvery}
                 onFocus={handleFocus}
                 type="text"
-                value={settings[SettingName.longBreakEvery]}
+                value={getSetting(SettingName.longBreakEvery)}
                 inputMode="numeric"
               />
             </label>
           </>
         )}
-
         <h3 className={styles.subTitle}>Auto-Start</h3>
         <div className={styles.label}>
           <span className={styles.labelTitle}>Break</span>
@@ -189,7 +183,7 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeAutoStartBreak}
             aria-label={"Break"}
             type="checkbox"
-            checked={settings[SettingName.autoStartBreak]}
+            checked={getSetting(SettingName.autoStartBreak)}
           />
         </div>
         <div className={styles.label}>
@@ -199,20 +193,10 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeAutoStartNextBreak}
             aria-label={"Next Focus"}
             type="checkbox"
-            checked={settings[SettingName.autoStartNextFocus]}
+            checked={getSetting(SettingName.autoStartNextFocus)}
           />
         </div>
-        <h3 className={styles.subTitle}>Colors</h3>
-        <div className={styles.label}>
-          <span className={styles.labelTitle}>Circle</span>
-          <input
-            type="color"
-            aria-label="circle color"
-            className={styles.inputColor}
-            value={settings[SettingName.colorCircle]}
-            onChange={handleChangeColorCircle}
-          />
-        </div>
+        <CircleColors getSetting={getSetting} setSetting={setSetting} />
       </form>
     </div>
   );

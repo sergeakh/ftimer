@@ -1,7 +1,7 @@
 import { JSX } from "preact";
 
-import { useContext } from "preact/hooks";
 import { useTimer } from "./hooks/useTimer";
+
 import { Status } from "./types";
 
 import { Progress } from "./Progress";
@@ -9,12 +9,14 @@ import { Progress } from "./Progress";
 import { useTitleStatus, Status as TitleStatus } from "./hooks/useTitleStatus";
 import { useIconStatus, Status as IconStatus } from "./hooks/useIconStatus";
 import { useThrottleAnimationFrameValue } from "../../hooks/useThrottleAnimationFrameValue";
+import { useCircleColor } from "./hooks/useCircleColor";
+
 import { SEC } from "../../utils/common";
-import { SettingsContext } from "../../Settings";
+import { ETimerInterval } from "../types";
 
 type Props = {
   status: Status;
-  timerIntervalName: string;
+  timerInterval: ETimerInterval;
   timeout: number;
   onFinish: () => void;
 };
@@ -33,24 +35,26 @@ const iconStatuses = {
 
 export const Process = ({
   status,
-  timerIntervalName,
+  timerInterval,
   timeout,
   onFinish,
 }: Props): JSX.Element => {
   const timeLeft = useTimer(status, timeout, onFinish);
   const animationedTimeLeft = useThrottleAnimationFrameValue(timeLeft);
-  const { settings } = useContext(SettingsContext);
 
-  useTitleStatus(titleStatuses[status], timerIntervalName, timeLeft);
+  const [circleColor, colorBackgoundCircle] = useCircleColor({ timerInterval });
 
-  useIconStatus(iconStatuses[status], timeLeft - SEC, timeout);
+  useTitleStatus(titleStatuses[status], timerInterval, timeLeft);
+
+  useIconStatus(iconStatuses[status], timerInterval, timeLeft - SEC, timeout);
 
   return (
     <Progress
       status={status}
       timeLeft={animationedTimeLeft}
       timeout={timeout}
-      colorCircle={settings.colorCircle}
+      colorCircle={circleColor}
+      colorBackgoundCircle={colorBackgoundCircle}
     />
   );
 };
