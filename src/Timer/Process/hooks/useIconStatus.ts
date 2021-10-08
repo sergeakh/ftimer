@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "preact/hooks";
 
 import { isMobile } from "../../../utils/browser";
-import { getСircumference } from "../../../utils/common";
+import { getСircumference, noop } from "../../../utils/common";
 import { ETimerInterval } from "../../types";
 
 import { getProgress } from "../common";
@@ -95,11 +95,11 @@ export const useIconStatus = (
   }, []);
 
   useEffect(() => {
-    if (!icon) return;
+    if (!icon) return noop;
 
     if (status === Status.Start) {
       showIcon(iconDefaultHref);
-      return;
+      return noop;
     }
 
     showIcon(
@@ -109,5 +109,9 @@ export const useIconStatus = (
         )
       )
     );
+
+    return () => {
+      showIcon(iconDefaultHref);
+    };
   }, [status, timeLeft]);
 };

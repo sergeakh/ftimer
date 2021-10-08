@@ -46,5 +46,9 @@ export const useTitleStatus = (
         timerIntervalName
       )}`
     );
+
+    return () => {
+      setTitle(DEFAULT_TITLE);
+    };
   }, [status, timeLeft]);
 };
