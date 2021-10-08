@@ -2,10 +2,12 @@ import { JSX } from "preact";
 import cn from "classnames";
 
 import { useCallback, useLayoutEffect, useRef } from "preact/hooks";
-import { formatTime, normalizeTime } from "../../utils/common";
+import {
+  formatTime,
+  normalizeTime,
+  getСircumference,
+} from "../../utils/common";
 import { Status } from "./types";
-
-import { getСircumference } from "./common";
 
 import { CIRCLE_RESTORE_TIME } from "../constants";
 
@@ -16,20 +18,20 @@ const CIRCUMFERENCE = getСircumference(RADIUS);
 
 type Props = {
   status: Status;
-  timeLeft: number;
-  timeout: number;
   colorBackgoundCircle: string;
   colorCircle: string;
+  timeLeft: number;
+  timeout: number;
 };
 
 const CIRCLE_TRANSITION = `${CIRCLE_RESTORE_TIME}ms stroke-dashoffset linear`;
 
 export const Progress = ({
   status,
+  colorCircle,
+  colorBackgoundCircle,
   timeLeft,
   timeout,
-  colorBackgoundCircle,
-  colorCircle,
 }: Props): JSX.Element => {
   const circleRef = useRef<SVGCircleElement>(null);
 

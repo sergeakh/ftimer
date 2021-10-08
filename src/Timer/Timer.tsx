@@ -8,7 +8,7 @@ import { TimerInterval, Status as TimerIntervalStatus } from "./TimerInterval";
 import { getMillisecondsFromMinutes, noop } from "../utils/common";
 import { useAlarm } from "../hooks/useAlarm";
 import { ETimerInterval } from "./types";
-import { SettingName } from "../Settings/types";
+import { BaseSettingName } from "../Settings/types";
 import { useTimerInterval } from "./hooks/useTimerInterval";
 import {
   useAutoChangeTimerInterval,
@@ -161,11 +161,11 @@ export const Timer = (): JSX.Element => {
 
   const timeout = useMemo(() => {
     if (timerInterval === ETimerInterval.Focus)
-      return getSetting(SettingName.focusDuration);
+      return getSetting(BaseSettingName.focusDuration);
     if (timerInterval === ETimerInterval.ShortBreak)
-      return getSetting(SettingName.shortBreakDuration);
+      return getSetting(BaseSettingName.shortBreakDuration);
     if (timerInterval === ETimerInterval.LongBreak)
-      return getSetting(SettingName.longBreakDuration);
+      return getSetting(BaseSettingName.longBreakDuration);
     return 0;
   }, [timerInterval]);
 
@@ -187,10 +187,10 @@ export const Timer = (): JSX.Element => {
     if (status === Status.FinishEnd) {
       if (
         (timerInterval === ETimerInterval.Focus &&
-          getSetting(SettingName.autoStartNextFocus)) ||
+          getSetting(BaseSettingName.autoStartNextFocus)) ||
         ((timerInterval === ETimerInterval.ShortBreak ||
           timerInterval === ETimerInterval.LongBreak) &&
-          getSetting(SettingName.autoStartBreak))
+          getSetting(BaseSettingName.autoStartBreak))
       ) {
         const timerId = setTimeout(() => {
           setStatus(Status.AutoStart);
@@ -217,7 +217,7 @@ export const Timer = (): JSX.Element => {
     <div class={styles.timer}>
       <TimerInterval
         status={timerIntervalStatuses[status]}
-        isLongBreak={getSetting(SettingName.longBreak)}
+        isLongBreak={getSetting(BaseSettingName.longBreak)}
         timerInterval={timerInterval}
         onChangeTimerInterval={handleManualChangeTimerInterval}
       />

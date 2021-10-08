@@ -28,3 +28,6 @@ export const formatTime = (time: number): string => {
 
 export const getMillisecondsFromMinutes = (minutes: number): number =>
   minutes * MS_PER_MIN;
+
+export const getСircumference = (radius: number): number =>
+  radius * 2 * Math.PI;

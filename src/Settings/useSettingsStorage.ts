@@ -8,31 +8,24 @@ import { SettingName, SetSetting, Settings } from "./types";
 import { defaultSettings } from "./constants";
 import { ISettingsContext } from "./context";
 
-type Action = { name: SettingName; value: Settings[SettingName] };
+type Action = { name: string; value: Settings[SettingName] };
 
 export const reducer = (state: Settings, action: Action): Settings => {
-  if (Object.values(SettingName).includes(action.name)) {
+  if (Object.keys(defaultSettings).includes(action.name)) {
     return { ...state, [action.name]: action.value };
   }
 
   return state;
 };
 
-function enumKeys<
-  O extends Record<string, unknown>,
-  K extends keyof O = keyof O
->(obj: O): K[] {
-  return Object.keys(obj) as K[];
-}
-
-export const getSetting = <T extends SettingName>(
-  name: T,
-  setState: (value: Settings[T]) => void,
+export const getSetting = (
+  name: string,
+  setState: (value: SettingName) => void,
   settingsStorage: SettingsStorage,
   signal: AbortSignal
 ): Promise<void> =>
   settingsStorage
-    .getSetting<Settings[T]>(name, { signal })
+    .getSetting<SettingName>(name, { signal })
     .then((savedValue) => setState(savedValue));
 
 type UseSettingsResult = ISettingsContext & {
@@ -54,10 +47,10 @@ export const useSettingsStorage = (
   const loadSettings = useCallback(() => {
     const abortController = new AbortController();
 
-    const requests = enumKeys(SettingName).map((name) =>
-      getSetting<SettingName>(
-        SettingName[name],
-        (newValue) => dispatch({ name: SettingName[name], value: newValue }),
+    const requests = Object.keys(defaultSettings).map((name) =>
+      getSetting(
+        name,
+        (newValue) => dispatch({ name, value: newValue }),
         settingsStorage,
         abortController.signal
       )

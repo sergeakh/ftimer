@@ -3,7 +3,7 @@ import cn from "classnames";
 
 import { useCallback, useLayoutEffect } from "preact/hooks";
 
-import { ColorScheme, SettingName } from "../Settings/types";
+import { ColorScheme, BaseSettingName } from "../Settings/types";
 
 import { useSettings } from "../Settings/useSettings";
 
@@ -25,7 +25,7 @@ export const ColorSchemeSwitcher = (): JSX.Element => {
   const { getSetting, setSetting } = useSettings();
 
   useLayoutEffect(() => {
-    setColorScheme(colorSchemes[getSetting(SettingName.colorScheme)]);
+    setColorScheme(colorSchemes[getSetting(BaseSettingName.colorScheme)]);
   }, []);
 
   const handleChange = useCallback(
@@ -34,12 +34,12 @@ export const ColorSchemeSwitcher = (): JSX.Element => {
 
       setColorScheme(colorSchemes[value]);
 
-      setSetting(SettingName.colorScheme, value);
+      setSetting(BaseSettingName.colorScheme, value);
     },
     []
   );
 
-  const colorScheme = getSetting(SettingName.colorScheme);
+  const colorScheme = getSetting(BaseSettingName.colorScheme);
 
   return (
     <div className={styles.wrapper}>

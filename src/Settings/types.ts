@@ -1,4 +1,4 @@
-export enum SettingName {
+export enum BaseSettingName {
   focusDuration = "focusDuration",
   shortBreakDuration = "shortBreakDuration",
   longBreak = "longBreak",
@@ -8,6 +8,9 @@ export enum SettingName {
   autoStartNextFocus = "autoStartNextFocus",
   colorScheme = "colorScheme",
   colorCircleAdvanced = "colorCircleAdvanced",
+}
+
+export enum ColorSettingName {
   colorCircleLight = "colorCircleLight",
   colorCircleBackgroundLight = "colorCircleBackgroundLight",
   colorCircleDark = "colorCircleDark",
@@ -26,6 +29,8 @@ export enum SettingName {
   colorCircleAdvancedLongBreakBackgroundDark = "colorCircleAdvancedLongBreakBackgroundDark",
 }
 
+export type SettingName = ColorSettingName | BaseSettingName;
+
 export const enum ColorScheme {
   Auto = "Auto",
   Light = "Light",
@@ -33,31 +38,31 @@ export const enum ColorScheme {
 }
 
 export type Settings = Readonly<{
-  [SettingName.focusDuration]: number;
-  [SettingName.shortBreakDuration]: number;
-  [SettingName.longBreak]: boolean;
-  [SettingName.longBreakDuration]: number;
-  [SettingName.longBreakEvery]: number;
-  [SettingName.autoStartBreak]: boolean;
-  [SettingName.autoStartNextFocus]: boolean;
-  [SettingName.colorScheme]: ColorScheme;
-  [SettingName.colorCircleAdvanced]: boolean;
-  [SettingName.colorCircleLight]: string;
-  [SettingName.colorCircleBackgroundLight]: string;
-  [SettingName.colorCircleDark]: string;
-  [SettingName.colorCircleBackgroundDark]: string;
-  [SettingName.colorCircleAdvancedFocusLight]: string;
-  [SettingName.colorCircleAdvancedFocusBackgroundLight]: string;
-  [SettingName.colorCircleAdvancedShortBreakLight]: string;
-  [SettingName.colorCircleAdvancedShortBreakBackgroundLight]: string;
-  [SettingName.colorCircleAdvancedLongBreakLight]: string;
-  [SettingName.colorCircleAdvancedLongBreakBackgroundLight]: string;
-  [SettingName.colorCircleAdvancedFocusDark]: string;
-  [SettingName.colorCircleAdvancedFocusBackgroundDark]: string;
-  [SettingName.colorCircleAdvancedShortBreakDark]: string;
-  [SettingName.colorCircleAdvancedShortBreakBackgroundDark]: string;
-  [SettingName.colorCircleAdvancedLongBreakDark]: string;
-  [SettingName.colorCircleAdvancedLongBreakBackgroundDark]: string;
+  [BaseSettingName.focusDuration]: number;
+  [BaseSettingName.shortBreakDuration]: number;
+  [BaseSettingName.longBreak]: boolean;
+  [BaseSettingName.longBreakDuration]: number;
+  [BaseSettingName.longBreakEvery]: number;
+  [BaseSettingName.autoStartBreak]: boolean;
+  [BaseSettingName.autoStartNextFocus]: boolean;
+  [BaseSettingName.colorScheme]: ColorScheme;
+  [BaseSettingName.colorCircleAdvanced]: boolean;
+  [ColorSettingName.colorCircleLight]: string;
+  [ColorSettingName.colorCircleBackgroundLight]: string;
+  [ColorSettingName.colorCircleDark]: string;
+  [ColorSettingName.colorCircleBackgroundDark]: string;
+  [ColorSettingName.colorCircleAdvancedFocusLight]: string;
+  [ColorSettingName.colorCircleAdvancedFocusBackgroundLight]: string;
+  [ColorSettingName.colorCircleAdvancedShortBreakLight]: string;
+  [ColorSettingName.colorCircleAdvancedShortBreakBackgroundLight]: string;
+  [ColorSettingName.colorCircleAdvancedLongBreakLight]: string;
+  [ColorSettingName.colorCircleAdvancedLongBreakBackgroundLight]: string;
+  [ColorSettingName.colorCircleAdvancedFocusDark]: string;
+  [ColorSettingName.colorCircleAdvancedFocusBackgroundDark]: string;
+  [ColorSettingName.colorCircleAdvancedShortBreakDark]: string;
+  [ColorSettingName.colorCircleAdvancedShortBreakBackgroundDark]: string;
+  [ColorSettingName.colorCircleAdvancedLongBreakDark]: string;
+  [ColorSettingName.colorCircleAdvancedLongBreakBackgroundDark]: string;
 }>;
 
 export type SetSetting = <T extends SettingName>(

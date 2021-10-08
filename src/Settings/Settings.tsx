@@ -8,7 +8,7 @@ import {
   MIN_LONG_BREAK_EVERY,
 } from "./constants";
 
-import { SettingName } from "./types";
+import { BaseSettingName } from "./types";
 import { Switch } from "../ui/Switch/Switch";
 
 import { CircleColors } from "./CircleColors";
@@ -42,7 +42,7 @@ export const Settings = (): JSX.Element => {
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedDurationValue(e.currentTarget.value);
       e.currentTarget.value = `${newValue}`;
-      setSetting(SettingName.focusDuration, newValue);
+      setSetting(BaseSettingName.focusDuration, newValue);
     },
     []
   );
@@ -51,7 +51,7 @@ export const Settings = (): JSX.Element => {
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedDurationValue(e.currentTarget.value);
       e.currentTarget.value = `${newValue}`;
-      setSetting(SettingName.shortBreakDuration, newValue);
+      setSetting(BaseSettingName.shortBreakDuration, newValue);
     },
     []
   );
@@ -59,7 +59,7 @@ export const Settings = (): JSX.Element => {
   const handleChangeLongBreak = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = e.currentTarget.checked;
-      setSetting(SettingName.longBreak, newValue);
+      setSetting(BaseSettingName.longBreak, newValue);
     },
     []
   );
@@ -68,7 +68,7 @@ export const Settings = (): JSX.Element => {
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedDurationValue(e.currentTarget.value);
       e.currentTarget.value = `${newValue}`;
-      setSetting(SettingName.longBreakDuration, newValue);
+      setSetting(BaseSettingName.longBreakDuration, newValue);
     },
     []
   );
@@ -77,7 +77,7 @@ export const Settings = (): JSX.Element => {
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = getClearedTimesValue(e.currentTarget.value);
       e.currentTarget.value = `${newValue}`;
-      setSetting(SettingName.longBreakEvery, newValue);
+      setSetting(BaseSettingName.longBreakEvery, newValue);
     },
     []
   );
@@ -85,7 +85,7 @@ export const Settings = (): JSX.Element => {
   const handleChangeAutoStartBreak = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = e.currentTarget.checked;
-      setSetting(SettingName.autoStartBreak, newValue);
+      setSetting(BaseSettingName.autoStartBreak, newValue);
     },
     []
   );
@@ -93,7 +93,7 @@ export const Settings = (): JSX.Element => {
   const handleChangeAutoStartNextBreak = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = e.currentTarget.checked;
-      setSetting(SettingName.autoStartNextFocus, newValue);
+      setSetting(BaseSettingName.autoStartNextFocus, newValue);
     },
     []
   );
@@ -120,7 +120,7 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeFocusDuration}
             onFocus={handleFocus}
             type="text"
-            value={getSetting(SettingName.focusDuration)}
+            value={getSetting(BaseSettingName.focusDuration)}
             inputMode="numeric"
           />
         </label>
@@ -131,7 +131,7 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeShortBreakDuration}
             onFocus={handleFocus}
             type="text"
-            value={getSetting(SettingName.shortBreakDuration)}
+            value={getSetting(BaseSettingName.shortBreakDuration)}
             inputMode="numeric"
           />
         </label>
@@ -142,10 +142,10 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeLongBreak}
             aria-label={"Long Break"}
             type="checkbox"
-            checked={getSetting(SettingName.longBreak)}
+            checked={getSetting(BaseSettingName.longBreak)}
           />
         </div>
-        {getSetting(SettingName.longBreak) && (
+        {getSetting(BaseSettingName.longBreak) && (
           <>
             <label className={styles.label}>
               <span className={styles.labelTitle}>
@@ -156,7 +156,7 @@ export const Settings = (): JSX.Element => {
                 onChange={handleChangeLongBreakDuration}
                 onFocus={handleFocus}
                 type="text"
-                value={getSetting(SettingName.longBreakDuration)}
+                value={getSetting(BaseSettingName.longBreakDuration)}
                 inputMode="numeric"
               />
             </label>
@@ -169,7 +169,7 @@ export const Settings = (): JSX.Element => {
                 onChange={handleChangeLongBreakEvery}
                 onFocus={handleFocus}
                 type="text"
-                value={getSetting(SettingName.longBreakEvery)}
+                value={getSetting(BaseSettingName.longBreakEvery)}
                 inputMode="numeric"
               />
             </label>
@@ -183,7 +183,7 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeAutoStartBreak}
             aria-label={"Break"}
             type="checkbox"
-            checked={getSetting(SettingName.autoStartBreak)}
+            checked={getSetting(BaseSettingName.autoStartBreak)}
           />
         </div>
         <div className={styles.label}>
@@ -193,7 +193,7 @@ export const Settings = (): JSX.Element => {
             onChange={handleChangeAutoStartNextBreak}
             aria-label={"Next Focus"}
             type="checkbox"
-            checked={getSetting(SettingName.autoStartNextFocus)}
+            checked={getSetting(BaseSettingName.autoStartNextFocus)}
           />
         </div>
         <CircleColors getSetting={getSetting} setSetting={setSetting} />

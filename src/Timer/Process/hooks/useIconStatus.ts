@@ -1,9 +1,10 @@
 import { useCallback, useEffect } from "preact/hooks";
 
 import { isMobile } from "../../../utils/browser";
+import { getСircumference } from "../../../utils/common";
 import { ETimerInterval } from "../../types";
 
-import { getProgress, getСircumference } from "../common";
+import { getProgress } from "../common";
 import { useCircleColor } from "./useCircleColor";
 
 export const enum Status {
