@@ -62,7 +62,7 @@
 }
 
 .light {
-  background-image: url("../assets/icons/sun.svg");
+  background-image: url("../../assets/icons/sun.svg");
 }
 
 @media (prefers-color-scheme: dark) {
@@ -72,7 +72,7 @@
 }
 
 .auto {
-  background-image: url("../assets/icons/a.svg");
+  background-image: url("../../assets/icons/a.svg");
   background-size: 14px;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .dark {
-  background-image: url("../assets/icons/moon.svg");
+  background-image: url("../../assets/icons/moon.svg");
 }
 
 @media (prefers-color-scheme: dark) {

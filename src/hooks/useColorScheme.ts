@@ -1,5 +1,5 @@
 import { useSettings } from "../Settings/useSettings";
-import { ColorScheme, BaseSettingName } from "../Settings/types";
+import { ColorScheme, SettingName } from "../Settings/types";
 
 type Opts = {
   ignoreColorSchemeChoise?: boolean;
@@ -10,7 +10,7 @@ export const useColorScheme = (
 ): ColorScheme => {
   const { getSetting } = useSettings();
 
-  const colorScheme = getSetting(BaseSettingName.colorScheme);
+  const colorScheme = getSetting(SettingName.colorScheme);
 
   if (ignoreColorSchemeChoise === false) {
     if (colorScheme === ColorScheme.Light) {

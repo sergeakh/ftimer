@@ -1,7 +1,7 @@
 export const enum ETimerInterval {
-  Focus = "Focus",
-  ShortBreak = "ShortBreak",
-  LongBreak = "LongBreak",
+  Focus = "F",
+  ShortBreak = "S",
+  LongBreak = "L",
 }
 
 export type SetTimerInterval = (newTimerInterval: ETimerInterval) => void;

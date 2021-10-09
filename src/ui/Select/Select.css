@@ -1,0 +1,81 @@
+.select {
+  display: flex;
+  position: relative;
+  border: 1px solid #000;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font-size: 16px;
+  line-height: 1.1;
+  min-width: 70px;
+  background-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  .select {
+    background-color: #222;
+    border-color: #fff;
+    color: #fff;
+  }
+}
+
+.select::after {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  content: "";
+  background-color: #000;
+  width: 10px;
+  height: 6px;
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .select::after {
+    background-color: #fff;
+  }
+}
+
+.select-standart {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  padding-right: 20px;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  .select-standart {
+    color: #fff;
+  }
+
+  .select-standart option {
+    color: #000;
+  }
+}
+
+.select-standart:focus + .focus {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  outline: 2px solid #000;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .select-standart:focus + .focus {
+    outline-color: #fff;
+  }
+}

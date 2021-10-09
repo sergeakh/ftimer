@@ -8,36 +8,19 @@ import { SettingsContext } from "./Settings/context";
 
 import { settingsStorage } from "./api/settingsStorage";
 import { Layout } from "./Layout";
-import { Menu } from "./Layout/Menu";
-
-import iconCircleSrc from "./assets/icons/circle.svg";
-import iconSettingsSrc from "./assets/icons/settings.svg";
 import { initNoSleep } from "./utils/noSleep";
-import { ColorSchemeSwitcher } from "./ColorSchemeSwitcher/ColorSchemeSwitcher";
+import { useLoadLocale } from "./locales/useLoadLocale";
+import { LocaleContext } from "./locales/context";
+import { SettingName } from "./Settings/types";
+import { Sidebar } from "./Sidebar";
 
-const Pages = {
-  timer: "Timer",
-  settings: "Settings",
-};
-
-const MenuLinks = [
-  {
-    title: Pages.timer,
-    url: Pages.timer,
-    iconSrc: iconCircleSrc,
-  },
-  {
-    title: Pages.settings,
-    url: Pages.settings,
-    iconSrc: iconSettingsSrc,
-  },
-];
+import { pages } from "./constants";
 
 export const App = (): JSX.Element => {
-  const [page, setPage] = useState(Pages.timer);
+  const [page, setPage] = useState(pages.timer);
   const [isDepsLoading, setIsDepsLoading] = useState(true);
 
-  const { isReady: isReadySettings, ...settings } =
+  const { isReady: isReadySettings, ...settingsContextValue } =
     useSettingsStorage(settingsStorage);
 
   const route = useCallback((newPage: string) => {
@@ -50,26 +33,24 @@ export const App = (): JSX.Element => {
     });
   }, []);
 
-  if (!isReadySettings || isDepsLoading) {
+  const locale = useLoadLocale(
+    isReadySettings,
+    settingsContextValue.settings[SettingName.locale]
+  );
+  if (!isReadySettings || isDepsLoading || !locale.isReady) {
     return <></>;
   }
 
   return (
-    <SettingsContext.Provider value={settings}>
-      <Layout
-        page={page}
-        sidebar={
+    <SettingsContext.Provider value={settingsContextValue}>
+      <LocaleContext.Provider value={locale.localeLabels}>
+        <Layout page={page} sidebar={<Sidebar page={page} route={route} />}>
           <>
-            <Menu links={MenuLinks} route={route} currUrl={page} />
-            <ColorSchemeSwitcher />
+            {page === pages.timer && <Timer />}
+            {page === pages.settings && <Settings />}
           </>
-        }
-      >
-        <>
-          {page === Pages.timer && <Timer />}
-          {page === Pages.settings && <Settings />}
-        </>
-      </Layout>
+        </Layout>
+      </LocaleContext.Provider>
     </SettingsContext.Provider>
   );
 };

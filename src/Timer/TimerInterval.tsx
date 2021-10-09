@@ -4,10 +4,12 @@ import { useCallback } from "preact/hooks";
 import { ETimerInterval, SetTimerInterval } from "./types";
 
 import styles from "./TimerInterval.css";
+import { useTranslate } from "../locales/useTranslate";
+import { LocaleLabelName } from "../locales/types";
 
 export const enum Status {
-  Run = "Run",
-  Another = "Another",
+  Run,
+  Another,
 }
 
 type Props = {
@@ -23,6 +25,8 @@ export const TimerInterval = ({
   timerInterval,
   onChangeTimerInterval,
 }: Props): JSX.Element => {
+  const t = useTranslate();
+
   const handleChange = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const value: ETimerInterval = e.currentTarget.value as ETimerInterval;
@@ -32,16 +36,31 @@ export const TimerInterval = ({
     [onChangeTimerInterval]
   );
 
+  const optionName = `timer-interval-${styles.wrapper}`;
+
+  const focusTitle = t(LocaleLabelName.TimerProcessIntervalNameFocus);
+  const focusShortTitle = t(LocaleLabelName.TimerProcessIntervalNameFocusShort);
+  const shortBreakTitle = t(LocaleLabelName.TimerProcessIntervalNameShortBreak);
+  const shortBreakShortTitle = t(
+    LocaleLabelName.TimerProcessIntervalNameShortBreakShort
+  );
+  const shortLongTitle = t(LocaleLabelName.TimerProcessIntervalNameLongBreak);
+  const shortLongShortTitle = t(
+    LocaleLabelName.TimerProcessIntervalNameLongBreakShort
+  );
+
   return (
     <div className={styles.wrapper}>
       {status === Status.Another && (
         <fieldset className={styles.switcher}>
-          <legend className="vh">Timer Mode</legend>
+          <legend className="vh">
+            {t(LocaleLabelName.TimerProcessIntervalSwitcherName)}
+          </legend>
           <input
             id={styles.focus}
             className="vh"
             type="radio"
-            name="timer-type"
+            name={optionName}
             value={ETimerInterval.Focus}
             checked={timerInterval === ETimerInterval.Focus}
             onChange={handleChange}
@@ -49,16 +68,16 @@ export const TimerInterval = ({
           <label
             htmlFor={styles.focus}
             className={styles.switcherButton}
-            title="Focus"
-            aria-label="Focus"
+            title={focusTitle}
+            aria-label={focusTitle}
           >
-            F
+            {focusShortTitle}
           </label>
           <input
             id={styles.shortBreak}
             className="vh"
             type="radio"
-            name="timer-type"
+            name={optionName}
             value={ETimerInterval.ShortBreak}
             checked={timerInterval === ETimerInterval.ShortBreak}
             onChange={handleChange}
@@ -66,10 +85,10 @@ export const TimerInterval = ({
           <label
             htmlFor={styles.shortBreak}
             className={styles.switcherButton}
-            title="Short Break"
-            aria-label="Short Break"
+            title={shortBreakTitle}
+            aria-label={shortBreakTitle}
           >
-            S
+            {shortBreakShortTitle}
           </label>
           {isLongBreak && (
             <>
@@ -77,7 +96,7 @@ export const TimerInterval = ({
                 id={styles.longBreak}
                 className="vh"
                 type="radio"
-                name="timer-type"
+                name={optionName}
                 value={ETimerInterval.LongBreak}
                 checked={timerInterval === ETimerInterval.LongBreak}
                 onChange={handleChange}
@@ -85,10 +104,10 @@ export const TimerInterval = ({
               <label
                 htmlFor={styles.longBreak}
                 className={styles.switcherButton}
-                title="Long Break"
-                aria-label="Long Break"
+                title={shortLongTitle}
+                aria-label={shortLongTitle}
               >
-                L
+                {shortLongShortTitle}
               </label>
             </>
           )}

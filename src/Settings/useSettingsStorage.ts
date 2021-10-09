@@ -11,7 +11,7 @@ import { ISettingsContext } from "./context";
 type Action = { name: string; value: Settings[SettingName] };
 
 export const reducer = (state: Settings, action: Action): Settings => {
-  if (Object.keys(defaultSettings).includes(action.name)) {
+  if (Object.keys(defaultSettings).includes(`${action.name}`)) {
     return { ...state, [action.name]: action.value };
   }
 
@@ -20,12 +20,12 @@ export const reducer = (state: Settings, action: Action): Settings => {
 
 export const getSetting = (
   name: string,
-  setState: (value: SettingName) => void,
+  setState: (value: Settings[SettingName]) => void,
   settingsStorage: SettingsStorage,
   signal: AbortSignal
 ): Promise<void> =>
   settingsStorage
-    .getSetting<SettingName>(name, { signal })
+    .getSetting<Settings[SettingName]>(name, { signal })
     .then((savedValue) => setState(savedValue));
 
 type UseSettingsResult = ISettingsContext & {
@@ -39,9 +39,9 @@ export const useSettingsStorage = (
   const [settings, dispatch] = useReducer(reducer, defaultSettings);
 
   const setSetting: SetSetting = useCallback((name, value) => {
-    dispatch({ name, value });
+    dispatch({ name: `${name}`, value });
 
-    settingsStorage.setSetting(name, value);
+    settingsStorage.setSetting(`${name}`, value);
   }, []);
 
   const loadSettings = useCallback(() => {

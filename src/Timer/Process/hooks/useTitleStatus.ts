@@ -4,7 +4,10 @@ import { isMobile } from "../../../utils/browser";
 import { formatTime, normalizeTime } from "../../../utils/common";
 import { ETimerInterval } from "../../types";
 
-import { useIntervalName } from "./useTimerIntervalName";
+import {
+  useIntervalName,
+  Status as IntervalNameStatus,
+} from "./useTimerIntervalName";
 
 const DEFAULT_TITLE = document.title;
 
@@ -13,6 +16,12 @@ export const enum Status {
   Run,
   Pause,
 }
+
+const intervalNameStatuses = {
+  [Status.Start]: IntervalNameStatus.Run,
+  [Status.Run]: IntervalNameStatus.Run,
+  [Status.Pause]: IntervalNameStatus.Pause,
+};
 
 export const setTitle = (title: string): void => {
   document.title = title;
@@ -37,7 +46,10 @@ export const useTitleStatus = (
 ): void => {
   if (isMobile()) return;
 
-  const timerIntervalName = useIntervalName(timerInterval);
+  const timerIntervalName = useIntervalName(
+    intervalNameStatuses[status],
+    timerInterval
+  );
 
   useEffect(() => {
     setTitle(

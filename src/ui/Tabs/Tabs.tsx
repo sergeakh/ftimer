@@ -4,14 +4,19 @@ import cn from "classnames";
 
 import styles from "./Tabs.css";
 
-type TabProps = {
+export type TabProps = {
   title: string;
   index: number;
   isActive: boolean;
   setIndex: (newIndex: number) => void;
 };
 
-const Tab = ({ title, index, isActive, setIndex }: TabProps): JSX.Element => {
+export const Tab = ({
+  title,
+  index,
+  isActive,
+  setIndex,
+}: TabProps): JSX.Element => {
   const handleChange = useCallback(() => {
     setIndex(index);
   }, [index]);
@@ -31,12 +36,12 @@ const Tab = ({ title, index, isActive, setIndex }: TabProps): JSX.Element => {
   );
 };
 
-type Tab = {
+export type Tab = {
   title: string;
   content: JSX.Element;
 };
 
-type Props = {
+export type Props = {
   tabs: Tab[];
 };
 

@@ -4,11 +4,8 @@ import cn from "classnames";
 import { ButtonBase } from "./ButtonBase";
 
 import styles from "./ProcessControl.css";
-
-export const BUTTON_START_TITLE = "Start";
-export const BUTTON_PAUSE_TITLE = "Pause";
-export const BUTTON_RESUME_TITLE = "Resume";
-export const BUTTON_STOP_TITLE = "Stop";
+import { LocaleLabelName } from "../../locales/types";
+import { useTranslate } from "../../locales/useTranslate";
 
 export const enum Status {
   Start,
@@ -18,9 +15,9 @@ export const enum Status {
 }
 
 const buttonMainTitles = {
-  [Status.Start]: BUTTON_START_TITLE,
-  [Status.Run]: BUTTON_PAUSE_TITLE,
-  [Status.Pause]: BUTTON_RESUME_TITLE,
+  [Status.Start]: LocaleLabelName.TimerProcessControlButtonStartTitle,
+  [Status.Run]: LocaleLabelName.TimerProcessControlButtonPauseTitle,
+  [Status.Pause]: LocaleLabelName.TimerProcessControlButtonResumeTitle,
 };
 
 type OnClick = () => void;
@@ -37,28 +34,32 @@ export const ProcessControl = ({
   onStart,
   onPause,
   onStop,
-}: Props): JSX.Element => (
-  <div className={styles.wrapper}>
-    {status !== Status.Another && (
-      <div className={styles.processControl}>
-        <ButtonBase
-          title={buttonMainTitles[status]}
-          color={status === Status.Run ? "secondary" : "primary"}
-          className={cn(styles.btnIcon, {
-            [styles.btnStart]: [Status.Start, Status.Pause].includes(status),
-            [styles.btnPause]: status === Status.Run,
-          })}
-          onClick={status === Status.Run ? onPause : onStart}
-        />
-        {status === Status.Pause && (
+}: Props): JSX.Element => {
+  const t = useTranslate();
+
+  return (
+    <div className={styles.wrapper}>
+      {status !== Status.Another && (
+        <div className={styles.processControl}>
           <ButtonBase
-            title={BUTTON_STOP_TITLE}
-            color="secondary"
-            className={cn(styles.btnIcon, styles.btnStop)}
-            onClick={onStop}
+            title={t(buttonMainTitles[status])}
+            color={status === Status.Run ? "secondary" : "primary"}
+            className={cn(styles.btnIcon, {
+              [styles.btnStart]: [Status.Start, Status.Pause].includes(status),
+              [styles.btnPause]: status === Status.Run,
+            })}
+            onClick={status === Status.Run ? onPause : onStart}
           />
-        )}
-      </div>
-    )}
-  </div>
-);
+          {status === Status.Pause && (
+            <ButtonBase
+              title={t(LocaleLabelName.TimerProcessControlButtonStopTitle)}
+              color="secondary"
+              className={cn(styles.btnIcon, styles.btnStop)}
+              onClick={onStop}
+            />
+          )}
+        </div>
+      )}
+    </div>
+  );
+};

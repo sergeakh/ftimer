@@ -1,7 +1,7 @@
 import { useCallback } from "preact/hooks";
 import { usePropByColorScheme } from "../../../hooks/usePropByColorScheme";
 import { useSettings } from "../../../Settings/useSettings";
-import { ColorSettingName, BaseSettingName } from "../../../Settings/types";
+import { SettingName, ColorSettingName } from "../../../Settings/types";
 import { ETimerInterval } from "../../types";
 
 type Opts = {
@@ -25,18 +25,18 @@ export const useCircleColor = ({
     [getProp]
   );
 
-  const circleColorAdvanced = getSetting(BaseSettingName.colorCircleAdvanced);
+  const circleColorAdvanced = getSetting(SettingName.colorCircleAdvanced);
 
   if (circleColorAdvanced) {
     if (timerInterval === ETimerInterval.Focus) {
       return [
         getColor(
-          ColorSettingName.colorCircleAdvancedFocusLight,
-          ColorSettingName.colorCircleAdvancedFocusDark
+          SettingName.colorCircleAdvancedFocusLight,
+          SettingName.colorCircleAdvancedFocusDark
         ),
         getColor(
-          ColorSettingName.colorCircleAdvancedFocusBackgroundLight,
-          ColorSettingName.colorCircleAdvancedFocusBackgroundDark
+          SettingName.colorCircleAdvancedFocusBackgroundLight,
+          SettingName.colorCircleAdvancedFocusBackgroundDark
         ),
       ];
     }
@@ -44,36 +44,33 @@ export const useCircleColor = ({
     if (timerInterval === ETimerInterval.ShortBreak) {
       return [
         getColor(
-          ColorSettingName.colorCircleAdvancedShortBreakLight,
-          ColorSettingName.colorCircleAdvancedShortBreakDark
+          SettingName.colorCircleAdvancedShortBreakLight,
+          SettingName.colorCircleAdvancedShortBreakDark
         ),
         getColor(
-          ColorSettingName.colorCircleAdvancedShortBreakBackgroundLight,
-          ColorSettingName.colorCircleAdvancedShortBreakBackgroundDark
+          SettingName.colorCircleAdvancedShortBreakBackgroundLight,
+          SettingName.colorCircleAdvancedShortBreakBackgroundDark
         ),
       ];
     }
 
     return [
       getColor(
-        ColorSettingName.colorCircleAdvancedLongBreakLight,
-        ColorSettingName.colorCircleAdvancedLongBreakDark
+        SettingName.colorCircleAdvancedLongBreakLight,
+        SettingName.colorCircleAdvancedLongBreakDark
       ),
       getColor(
-        ColorSettingName.colorCircleAdvancedLongBreakBackgroundLight,
-        ColorSettingName.colorCircleAdvancedLongBreakBackgroundDark
+        SettingName.colorCircleAdvancedLongBreakBackgroundLight,
+        SettingName.colorCircleAdvancedLongBreakBackgroundDark
       ),
     ];
   }
 
   return [
+    getColor(SettingName.colorCircleLight, SettingName.colorCircleDark),
     getColor(
-      ColorSettingName.colorCircleLight,
-      ColorSettingName.colorCircleDark
-    ),
-    getColor(
-      ColorSettingName.colorCircleBackgroundLight,
-      ColorSettingName.colorCircleBackgroundDark
+      SettingName.colorCircleBackgroundLight,
+      SettingName.colorCircleBackgroundDark
     ),
   ];
 };

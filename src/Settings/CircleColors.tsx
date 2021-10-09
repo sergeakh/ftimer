@@ -3,19 +3,23 @@ import { useCallback } from "preact/hooks";
 
 import { Switch } from "../ui/Switch/Switch";
 import {
-  ColorSettingName,
   SetSetting,
   GetSetting,
   ColorScheme,
-  BaseSettingName,
+  SettingName,
+  ColorSettingName,
 } from "./types";
 
 import { CircelDemo } from "./CircleDemo";
-import { Tabs } from "../ui/Switch/Tabs";
+import { Tabs } from "../ui/Tabs";
+import { InputColor } from "../ui/InputColor";
 
 import { useColorScheme } from "../hooks/useColorScheme";
 
 import styles from "./Settings.css";
+import { useTranslate } from "../locales/useTranslate";
+import { LocaleLabelName } from "../locales/types";
+import { usePropByColorScheme } from "../hooks/usePropByColorScheme";
 
 type ColorCircleSettingProps = {
   label: string;
@@ -31,10 +35,8 @@ export const ColorCircleSetting = ({
   setSetting,
 }: ColorCircleSettingProps): JSX.Element => {
   const handleChangeColor = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = e.currentTarget.value;
-      e.currentTarget.value = `${newValue}`;
-      setSetting(settingName, newValue);
+    (value: string) => {
+      setSetting(settingName, value);
     },
     [settingName]
   );
@@ -42,10 +44,8 @@ export const ColorCircleSetting = ({
   return (
     <div className={styles.label}>
       <span className={styles.labelTitle}>{label}</span>
-      <input
-        type="color"
+      <InputColor
         aria-label={label}
-        className={styles.inputColor}
         value={getSetting(settingName)}
         onChange={handleChangeColor}
       />
@@ -54,85 +54,72 @@ export const ColorCircleSetting = ({
 };
 
 type ColorCircleSettingsProps = {
-  mainLabel: string;
-  backgroundLabel: string;
-  mainColorSettingName: ColorSettingName;
-  backgroundColorSettingName: ColorSettingName;
+  mainSettingName: ColorSettingName;
+  backgroundSettingName: ColorSettingName;
   setSetting: SetSetting;
   getSetting: GetSetting;
 };
 
 export const ColorCircleSettings = ({
-  mainLabel,
-  backgroundLabel,
-  mainColorSettingName,
-  backgroundColorSettingName,
+  mainSettingName,
+  backgroundSettingName,
   getSetting,
   setSetting,
-}: ColorCircleSettingsProps): JSX.Element => (
-  <>
-    <CircelDemo
-      colorCircle={getSetting(mainColorSettingName)}
-      colorBackgoundCircle={getSetting(backgroundColorSettingName)}
-    />
-    <ColorCircleSetting
-      label={mainLabel}
-      settingName={mainColorSettingName}
-      getSetting={getSetting}
-      setSetting={setSetting}
-    />
-    <ColorCircleSetting
-      label={backgroundLabel}
-      settingName={backgroundColorSettingName}
-      getSetting={getSetting}
-      setSetting={setSetting}
-    />
-  </>
-);
+}: ColorCircleSettingsProps): JSX.Element => {
+  const t = useTranslate();
 
+  return (
+    <>
+      <CircelDemo
+        colorCircle={getSetting(mainSettingName)}
+        colorBackgoundCircle={getSetting(backgroundSettingName)}
+      />
+      <ColorCircleSetting
+        label={t(LocaleLabelName.SettingsColorsCircleMainLabel)}
+        settingName={mainSettingName}
+        getSetting={getSetting}
+        setSetting={setSetting}
+      />
+      <ColorCircleSetting
+        label={t(LocaleLabelName.SettingsColorsCircleBackgroundLabel)}
+        settingName={backgroundSettingName}
+        getSetting={getSetting}
+        setSetting={setSetting}
+      />
+    </>
+  );
+};
 type ColorCircleLightDarkSettingsProps = {
   colorScheme: ColorScheme;
-  mainLabelLight: string;
-  mainLabelDark: string;
-  backgroundLabelLight: string;
-  backgroundLabelDark: string;
-  mainColorSettingNameLight: ColorSettingName;
-  mainColorSettingNameDark: ColorSettingName;
-  backgroundColorSettingNameLight: ColorSettingName;
-  backgroundColorSettingNameDark: ColorSettingName;
+  mainSettingNameLight: ColorSettingName;
+  mainSettingNameDark: ColorSettingName;
+  backgroundSettingNameLight: ColorSettingName;
+  backgroundSettingNameDark: ColorSettingName;
   setSetting: SetSetting;
   getSetting: GetSetting;
 };
 
 export const ColorCircleLightDarkSettings = ({
   colorScheme,
-  mainLabelLight,
-  mainLabelDark,
-  backgroundLabelLight,
-  backgroundLabelDark,
-  mainColorSettingNameLight,
-  mainColorSettingNameDark,
-  backgroundColorSettingNameLight,
-  backgroundColorSettingNameDark,
+  mainSettingNameLight,
+  mainSettingNameDark,
+  backgroundSettingNameLight,
+  backgroundSettingNameDark,
   ...props
 }: ColorCircleLightDarkSettingsProps): JSX.Element =>
   colorScheme === ColorScheme.Light ? (
     <>
       <ColorCircleSettings
-        mainLabel={mainLabelLight}
-        mainColorSettingName={mainColorSettingNameLight}
-        backgroundLabel={backgroundLabelLight}
-        backgroundColorSettingName={backgroundColorSettingNameLight}
+        mainSettingName={mainSettingNameLight}
+        backgroundSettingName={backgroundSettingNameLight}
         {...props}
       />
     </>
   ) : (
     <>
       <ColorCircleSettings
-        mainLabel={mainLabelDark}
-        mainColorSettingName={mainColorSettingNameDark}
-        backgroundLabel={backgroundLabelDark}
-        backgroundColorSettingName={backgroundColorSettingNameDark}
+        mainSettingName={mainSettingNameDark}
+        backgroundSettingName={backgroundSettingNameDark}
         {...props}
       />
     </>
@@ -147,28 +134,31 @@ export const CircleColors = ({
   setSetting,
   getSetting,
 }: Props): JSX.Element => {
+  const t = useTranslate();
   const colorScheme = useColorScheme();
+  const { getProp } = usePropByColorScheme({});
 
-  const handleChangeColorCircleAdvanced = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = e.currentTarget.checked;
-      setSetting(BaseSettingName.colorCircleAdvanced, newValue);
-    },
-    []
+  const handleChangeColorCircleAdvanced = useCallback((value: boolean) => {
+    setSetting(SettingName.colorCircleAdvanced, value);
+  }, []);
+
+  const title = `${t(LocaleLabelName.SettingsColorsTitle)} (${getProp(
+    t(LocaleLabelName.SidebarColorSchemeSwitcherOptionLightTitle),
+    t(LocaleLabelName.SidebarColorSchemeSwitcherOptionDarkTitle)
+  )})`;
+  const colorCircleAdvanced = getSetting(SettingName.colorCircleAdvanced);
+  const colorCircleAdvancedTitle = t(
+    LocaleLabelName.SettingsColorsAdvancedSettingsLabel
   );
-
-  const colorCircleAdvanced = getSetting(BaseSettingName.colorCircleAdvanced);
 
   return (
     <>
-      <h3 className={styles.subTitle}>Colors</h3>
+      <h3 className={styles.subTitle}>{title}</h3>
       <div className={styles.label}>
-        <span className={styles.labelTitle}>Circle Advanced</span>
+        <span className={styles.labelTitle}>{colorCircleAdvancedTitle}</span>
         <Switch
-          className={styles.checkbox}
           onChange={handleChangeColorCircleAdvanced}
-          aria-label={"circle color advanced"}
-          type="checkbox"
+          aria-label={colorCircleAdvancedTitle}
           checked={colorCircleAdvanced}
         />
       </div>
@@ -176,25 +166,19 @@ export const CircleColors = ({
         <Tabs
           tabs={[
             {
-              title: "Focus",
+              title: t(LocaleLabelName.TimerProcessIntervalNameFocus),
               content: (
                 <ColorCircleLightDarkSettings
                   colorScheme={colorScheme}
-                  mainLabelLight="Circle Focus Light"
-                  mainLabelDark="Circle Focus Dark"
-                  backgroundLabelLight="Circle Background Focus Light"
-                  backgroundLabelDark="Circle Background Focus Dark"
-                  mainColorSettingNameLight={
-                    ColorSettingName.colorCircleAdvancedFocusLight
+                  mainSettingNameLight={
+                    SettingName.colorCircleAdvancedFocusLight
                   }
-                  mainColorSettingNameDark={
-                    ColorSettingName.colorCircleAdvancedFocusDark
+                  mainSettingNameDark={SettingName.colorCircleAdvancedFocusDark}
+                  backgroundSettingNameLight={
+                    SettingName.colorCircleAdvancedFocusBackgroundLight
                   }
-                  backgroundColorSettingNameLight={
-                    ColorSettingName.colorCircleAdvancedFocusBackgroundLight
-                  }
-                  backgroundColorSettingNameDark={
-                    ColorSettingName.colorCircleAdvancedFocusBackgroundDark
+                  backgroundSettingNameDark={
+                    SettingName.colorCircleAdvancedFocusBackgroundDark
                   }
                   getSetting={getSetting}
                   setSetting={setSetting}
@@ -202,25 +186,21 @@ export const CircleColors = ({
               ),
             },
             {
-              title: "Short Break",
+              title: t(LocaleLabelName.TimerProcessIntervalNameShortBreak),
               content: (
                 <ColorCircleLightDarkSettings
                   colorScheme={colorScheme}
-                  mainLabelLight="Circle Short Break Light"
-                  mainLabelDark="Circle Short Break Dark"
-                  backgroundLabelLight="Circle Background Short Break Light"
-                  backgroundLabelDark="Circle Background Short Break Dark"
-                  mainColorSettingNameLight={
-                    ColorSettingName.colorCircleAdvancedShortBreakLight
+                  mainSettingNameLight={
+                    SettingName.colorCircleAdvancedShortBreakLight
                   }
-                  mainColorSettingNameDark={
-                    ColorSettingName.colorCircleAdvancedShortBreakDark
+                  mainSettingNameDark={
+                    SettingName.colorCircleAdvancedShortBreakDark
                   }
-                  backgroundColorSettingNameLight={
-                    ColorSettingName.colorCircleAdvancedShortBreakBackgroundLight
+                  backgroundSettingNameLight={
+                    SettingName.colorCircleAdvancedShortBreakBackgroundLight
                   }
-                  backgroundColorSettingNameDark={
-                    ColorSettingName.colorCircleAdvancedShortBreakBackgroundDark
+                  backgroundSettingNameDark={
+                    SettingName.colorCircleAdvancedShortBreakBackgroundDark
                   }
                   getSetting={getSetting}
                   setSetting={setSetting}
@@ -228,25 +208,21 @@ export const CircleColors = ({
               ),
             },
             {
-              title: "Long Break",
+              title: t(LocaleLabelName.TimerProcessIntervalNameLongBreak),
               content: (
                 <ColorCircleLightDarkSettings
                   colorScheme={colorScheme}
-                  mainLabelLight="Circle Long Break Light"
-                  mainLabelDark="Circle Long Break Dark"
-                  backgroundLabelLight="Circle Background Long Break Light"
-                  backgroundLabelDark="Circle Background Long Break Dark"
-                  mainColorSettingNameLight={
-                    ColorSettingName.colorCircleAdvancedLongBreakLight
+                  mainSettingNameLight={
+                    SettingName.colorCircleAdvancedLongBreakLight
                   }
-                  mainColorSettingNameDark={
-                    ColorSettingName.colorCircleAdvancedLongBreakDark
+                  mainSettingNameDark={
+                    SettingName.colorCircleAdvancedLongBreakDark
                   }
-                  backgroundColorSettingNameLight={
-                    ColorSettingName.colorCircleAdvancedLongBreakBackgroundLight
+                  backgroundSettingNameLight={
+                    SettingName.colorCircleAdvancedLongBreakBackgroundLight
                   }
-                  backgroundColorSettingNameDark={
-                    ColorSettingName.colorCircleAdvancedLongBreakBackgroundDark
+                  backgroundSettingNameDark={
+                    SettingName.colorCircleAdvancedLongBreakBackgroundDark
                   }
                   getSetting={getSetting}
                   setSetting={setSetting}
@@ -258,18 +234,10 @@ export const CircleColors = ({
       ) : (
         <ColorCircleLightDarkSettings
           colorScheme={colorScheme}
-          mainLabelLight="Circle Light"
-          mainLabelDark="Circle Dark"
-          backgroundLabelLight="Circle Background Light"
-          backgroundLabelDark="Circle Background Dark"
-          mainColorSettingNameLight={ColorSettingName.colorCircleLight}
-          mainColorSettingNameDark={ColorSettingName.colorCircleDark}
-          backgroundColorSettingNameLight={
-            ColorSettingName.colorCircleBackgroundLight
-          }
-          backgroundColorSettingNameDark={
-            ColorSettingName.colorCircleBackgroundDark
-          }
+          mainSettingNameLight={SettingName.colorCircleLight}
+          mainSettingNameDark={SettingName.colorCircleDark}
+          backgroundSettingNameLight={SettingName.colorCircleBackgroundLight}
+          backgroundSettingNameDark={SettingName.colorCircleBackgroundDark}
           getSetting={getSetting}
           setSetting={setSetting}
         />

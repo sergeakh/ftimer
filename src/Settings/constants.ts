@@ -1,10 +1,6 @@
-import {
-  BaseSettingName,
-  ColorSettingName,
-  Settings,
-  ColorScheme,
-} from "./types";
+import { SettingName, Settings, ColorScheme, LocaleName } from "./types";
 
+export const DEFAULT_LANG = LocaleName.EN;
 export const DEFAULT_FOCUS_DURATION = 25;
 export const DEFAULT_SHORT_BREAK_DURATION = 5;
 export const DEFAULT_LONG_BREAK = false;
@@ -19,44 +15,45 @@ export const DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT = "#eeeeee";
 export const DEFAULT_COLOR_CIRCLE_DARK = "#ffffff";
 export const DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK = "#222222";
 
+export const langs = {
+  [LocaleName.RU]: "RU",
+  [LocaleName.EN]: "EN",
+};
+
 export const defaultSettings: Readonly<Settings> = {
-  [BaseSettingName.focusDuration]: DEFAULT_FOCUS_DURATION,
-  [BaseSettingName.shortBreakDuration]: DEFAULT_SHORT_BREAK_DURATION,
-  [BaseSettingName.longBreak]: DEFAULT_LONG_BREAK,
-  [BaseSettingName.longBreakEvery]: DEFAULT_LONG_BREAK_EVERY,
-  [BaseSettingName.longBreakDuration]: DEFAULT_LONG_BREAK_DURATION,
-  [BaseSettingName.longBreakEvery]: DEFAULT_LONG_BREAK_EVERY,
-  [BaseSettingName.autoStartBreak]: DEFAULT_AUTO_START_BREAK,
-  [BaseSettingName.autoStartNextFocus]: DEFAULT_AUTO_START_NEXT_FOCUS,
-  [BaseSettingName.colorScheme]: DEFAULT_COLOR_SCHEME,
-  [BaseSettingName.colorCircleAdvanced]: DEFAULT_COLOR_CIRCLE_ADVANCED,
-  [ColorSettingName.colorCircleLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
-  [ColorSettingName.colorCircleBackgroundLight]:
+  [SettingName.locale]: DEFAULT_LANG,
+  [SettingName.focusDuration]: DEFAULT_FOCUS_DURATION,
+  [SettingName.shortBreakDuration]: DEFAULT_SHORT_BREAK_DURATION,
+  [SettingName.longBreak]: DEFAULT_LONG_BREAK,
+  [SettingName.longBreakEvery]: DEFAULT_LONG_BREAK_EVERY,
+  [SettingName.longBreakDuration]: DEFAULT_LONG_BREAK_DURATION,
+  [SettingName.longBreakEvery]: DEFAULT_LONG_BREAK_EVERY,
+  [SettingName.autoStartBreak]: DEFAULT_AUTO_START_BREAK,
+  [SettingName.autoStartNextFocus]: DEFAULT_AUTO_START_NEXT_FOCUS,
+  [SettingName.colorScheme]: DEFAULT_COLOR_SCHEME,
+  [SettingName.colorCircleAdvanced]: DEFAULT_COLOR_CIRCLE_ADVANCED,
+  [SettingName.colorCircleLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorCircleBackgroundLight]:
     DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
-  [ColorSettingName.colorCircleDark]: DEFAULT_COLOR_CIRCLE_DARK,
-  [ColorSettingName.colorCircleBackgroundDark]:
+  [SettingName.colorCircleDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorCircleBackgroundDark]: DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
+  [SettingName.colorCircleAdvancedFocusLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorCircleAdvancedFocusBackgroundLight]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
+  [SettingName.colorCircleAdvancedShortBreakLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorCircleAdvancedShortBreakBackgroundLight]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
+  [SettingName.colorCircleAdvancedLongBreakLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorCircleAdvancedLongBreakBackgroundLight]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
+  [SettingName.colorCircleAdvancedFocusDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorCircleAdvancedFocusBackgroundDark]:
     DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
-  [ColorSettingName.colorCircleAdvancedFocusLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
-  [ColorSettingName.colorCircleAdvancedFocusBackgroundLight]:
-    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
-  [ColorSettingName.colorCircleAdvancedShortBreakLight]:
-    DEFAULT_COLOR_CIRCLE_LIGHT,
-  [ColorSettingName.colorCircleAdvancedShortBreakBackgroundLight]:
-    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
-  [ColorSettingName.colorCircleAdvancedLongBreakLight]:
-    DEFAULT_COLOR_CIRCLE_LIGHT,
-  [ColorSettingName.colorCircleAdvancedLongBreakBackgroundLight]:
-    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
-  [ColorSettingName.colorCircleAdvancedFocusDark]: DEFAULT_COLOR_CIRCLE_DARK,
-  [ColorSettingName.colorCircleAdvancedFocusBackgroundDark]:
+  [SettingName.colorCircleAdvancedShortBreakDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorCircleAdvancedShortBreakBackgroundDark]:
     DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
-  [ColorSettingName.colorCircleAdvancedShortBreakDark]:
-    DEFAULT_COLOR_CIRCLE_DARK,
-  [ColorSettingName.colorCircleAdvancedShortBreakBackgroundDark]:
-    DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
-  [ColorSettingName.colorCircleAdvancedLongBreakDark]:
-    DEFAULT_COLOR_CIRCLE_DARK,
-  [ColorSettingName.colorCircleAdvancedLongBreakBackgroundDark]:
+  [SettingName.colorCircleAdvancedLongBreakDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorCircleAdvancedLongBreakBackgroundDark]:
     DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
 };
 

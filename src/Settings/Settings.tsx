@@ -8,14 +8,18 @@ import {
   MIN_LONG_BREAK_EVERY,
 } from "./constants";
 
-import { BaseSettingName } from "./types";
-import { Switch } from "../ui/Switch/Switch";
+import { SettingName } from "./types";
+import { Switch } from "../ui/Switch";
+import { Input } from "../ui/Input";
 
 import { CircleColors } from "./CircleColors";
+import { Language } from "./Language";
 
 import { useSettings } from "./useSettings";
 
 import styles from "./Settings.css";
+import { useTranslate } from "../locales/useTranslate";
+import { LocaleLabelName } from "../locales/types";
 
 const getClearedDurationValue = (value: string): number => {
   const newValue = +value.replace(/\D/g, "") || MIN_DURATION;
@@ -36,164 +40,129 @@ const getClearedTimesValue = (value: string): number => {
 };
 
 export const Settings = (): JSX.Element => {
+  const t = useTranslate();
   const { setSetting, getSetting } = useSettings();
 
-  const handleChangeFocusDuration = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = getClearedDurationValue(e.currentTarget.value);
-      e.currentTarget.value = `${newValue}`;
-      setSetting(BaseSettingName.focusDuration, newValue);
-    },
-    []
+  const handleChangeFocusDuration = useCallback((value: string) => {
+    setSetting(SettingName.focusDuration, getClearedDurationValue(value));
+  }, []);
+
+  const handleChangeShortBreakDuration = useCallback((value: string) => {
+    setSetting(SettingName.shortBreakDuration, getClearedDurationValue(value));
+  }, []);
+
+  const handleChangeLongBreak = useCallback((value: boolean) => {
+    setSetting(SettingName.longBreak, value);
+  }, []);
+
+  const handleChangeLongBreakDuration = useCallback((value: string) => {
+    setSetting(SettingName.longBreakDuration, getClearedDurationValue(value));
+  }, []);
+
+  const handleChangeLongBreakEvery = useCallback((value: string) => {
+    setSetting(SettingName.longBreakEvery, getClearedTimesValue(value));
+  }, []);
+
+  const handleChangeAutoStartBreak = useCallback((value: boolean) => {
+    setSetting(SettingName.autoStartBreak, value);
+  }, []);
+
+  const handleChangeAutoStartNextBreak = useCallback((value: boolean) => {
+    setSetting(SettingName.autoStartNextFocus, value);
+  }, []);
+
+  const durFocusLabel = t(LocaleLabelName.TimerProcessIntervalNameFocus);
+  const durShortBreakLabel = t(
+    LocaleLabelName.TimerProcessIntervalNameShortBreak
+  );
+  const durLongBreakLabel = t(
+    LocaleLabelName.TimerProcessIntervalNameLongBreak
+  );
+  const durLongBreakEveryLabel = t(
+    LocaleLabelName.SettingsDurationsLongBreakEveryLabel
   );
 
-  const handleChangeShortBreakDuration = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = getClearedDurationValue(e.currentTarget.value);
-      e.currentTarget.value = `${newValue}`;
-      setSetting(BaseSettingName.shortBreakDuration, newValue);
-    },
-    []
-  );
-
-  const handleChangeLongBreak = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = e.currentTarget.checked;
-      setSetting(BaseSettingName.longBreak, newValue);
-    },
-    []
-  );
-
-  const handleChangeLongBreakDuration = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = getClearedDurationValue(e.currentTarget.value);
-      e.currentTarget.value = `${newValue}`;
-      setSetting(BaseSettingName.longBreakDuration, newValue);
-    },
-    []
-  );
-
-  const handleChangeLongBreakEvery = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = getClearedTimesValue(e.currentTarget.value);
-      e.currentTarget.value = `${newValue}`;
-      setSetting(BaseSettingName.longBreakEvery, newValue);
-    },
-    []
-  );
-
-  const handleChangeAutoStartBreak = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = e.currentTarget.checked;
-      setSetting(BaseSettingName.autoStartBreak, newValue);
-    },
-    []
-  );
-
-  const handleChangeAutoStartNextBreak = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const newValue = e.currentTarget.checked;
-      setSetting(BaseSettingName.autoStartNextFocus, newValue);
-    },
-    []
-  );
-
-  const handleFocus = useCallback(
-    (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
-      const input = e.currentTarget;
-      const len = input.value.length;
-      setTimeout(() => {
-        input.setSelectionRange(len, len);
-      }, 0);
-    },
-    []
+  const autoStartBreakLabel = t(LocaleLabelName.SettingsAutoStartBreakLabel);
+  const autoStartNextFocusLabel = t(
+    LocaleLabelName.SettingsAutoStartNextFocusLabel
   );
 
   return (
     <div className={styles.settings}>
-      <h2 className={styles.title}>Settings</h2>
       <form>
-        <label className={styles.label}>
-          <span className={styles.labelTitle}>Focus Duration (mins)</span>
-          <input
-            className={styles.input}
-            onChange={handleChangeFocusDuration}
-            onFocus={handleFocus}
-            type="text"
-            value={getSetting(BaseSettingName.focusDuration)}
-            inputMode="numeric"
-          />
-        </label>
-        <label className={styles.label}>
-          <span className={styles.labelTitle}>Short Break Duration (mins)</span>
-          <input
-            className={styles.input}
-            onChange={handleChangeShortBreakDuration}
-            onFocus={handleFocus}
-            type="text"
-            value={getSetting(BaseSettingName.shortBreakDuration)}
-            inputMode="numeric"
-          />
-        </label>
+        <Language setSetting={setSetting} getSetting={getSetting} />
+        <h3 className={styles.subTitle}>
+          {t(LocaleLabelName.SettingsDurationsTitle)}
+        </h3>
         <div className={styles.label}>
-          <span className={styles.labelTitle}>Long Break</span>
-          <Switch
-            className={styles.checkbox}
-            onChange={handleChangeLongBreak}
-            aria-label={"Long Break"}
-            type="checkbox"
-            checked={getSetting(BaseSettingName.longBreak)}
+          <span className={styles.labelTitle}>{durFocusLabel}</span>
+          <Input
+            aria-label={durFocusLabel}
+            value={getSetting(SettingName.focusDuration)}
+            onChange={handleChangeFocusDuration}
+            inputMode="numeric"
           />
         </div>
-        {getSetting(BaseSettingName.longBreak) && (
+        <div className={styles.label}>
+          <span className={styles.labelTitle}>{durShortBreakLabel}</span>
+          <Input
+            aria-label={durShortBreakLabel}
+            value={getSetting(SettingName.shortBreakDuration)}
+            onChange={handleChangeShortBreakDuration}
+            inputMode="numeric"
+          />
+        </div>
+        <div className={styles.label}>
+          <span className={styles.labelTitle}>{durLongBreakLabel}</span>
+          <Switch
+            onChange={handleChangeLongBreak}
+            aria-label={durLongBreakLabel}
+            checked={getSetting(SettingName.longBreak)}
+          />
+        </div>
+        {getSetting(SettingName.longBreak) && (
           <>
-            <label className={styles.label}>
-              <span className={styles.labelTitle}>
-                Long Break Duration (mins)
-              </span>
-              <input
-                className={styles.input}
+            <div className={styles.label}>
+              <span className={styles.labelTitle}>{durLongBreakLabel}</span>
+              <Input
+                aria-label={durLongBreakLabel}
+                value={getSetting(SettingName.longBreakDuration)}
                 onChange={handleChangeLongBreakDuration}
-                onFocus={handleFocus}
-                type="text"
-                value={getSetting(BaseSettingName.longBreakDuration)}
                 inputMode="numeric"
               />
-            </label>
-            <label className={styles.label}>
+            </div>
+            <div className={styles.label}>
               <span className={styles.labelTitle}>
-                Long Break Every (times)
+                {durLongBreakEveryLabel}
               </span>
-              <input
-                className={styles.input}
+              <Input
+                aria-label={durLongBreakEveryLabel}
+                value={getSetting(SettingName.longBreakEvery)}
                 onChange={handleChangeLongBreakEvery}
-                onFocus={handleFocus}
-                type="text"
-                value={getSetting(BaseSettingName.longBreakEvery)}
                 inputMode="numeric"
               />
-            </label>
+            </div>
           </>
         )}
-        <h3 className={styles.subTitle}>Auto-Start</h3>
+        <h3 className={styles.subTitle}>
+          {t(LocaleLabelName.SettingsAutoStartTitle)}
+        </h3>
         <div className={styles.label}>
-          <span className={styles.labelTitle}>Break</span>
+          <span className={styles.labelTitle}>{autoStartBreakLabel}</span>
           <Switch
             className={styles.checkbox}
             onChange={handleChangeAutoStartBreak}
-            aria-label={"Break"}
-            type="checkbox"
-            checked={getSetting(BaseSettingName.autoStartBreak)}
+            aria-label={autoStartBreakLabel}
+            checked={getSetting(SettingName.autoStartBreak)}
           />
         </div>
         <div className={styles.label}>
-          <span className={styles.labelTitle}>Next Focus</span>
+          <span className={styles.labelTitle}>{autoStartNextFocusLabel}</span>
           <Switch
             className={styles.checkbox}
             onChange={handleChangeAutoStartNextBreak}
-            aria-label={"Next Focus"}
-            type="checkbox"
-            checked={getSetting(BaseSettingName.autoStartNextFocus)}
+            aria-label={autoStartNextFocusLabel}
+            checked={getSetting(SettingName.autoStartNextFocus)}
           />
         </div>
         <CircleColors getSetting={getSetting} setSetting={setSetting} />

@@ -1,6 +1,6 @@
 import { useEffect } from "preact/hooks";
 import { useSettings } from "../../Settings/useSettings";
-import { BaseSettingName } from "../../Settings/types";
+import { SettingName } from "../../Settings/types";
 import { ETimerInterval, SetTimerInterval } from "../types";
 
 export const enum Status {
@@ -21,8 +21,8 @@ export const useAutoChangeTimerInterval = (
 
     if (timerInterval === ETimerInterval.Focus) {
       if (
-        getSetting(BaseSettingName.longBreak) &&
-        focusTimes % getSetting(BaseSettingName.longBreakEvery) === 0
+        getSetting(SettingName.longBreak) &&
+        focusTimes % getSetting(SettingName.longBreakEvery) === 0
       ) {
         setTimerInterval(ETimerInterval.LongBreak);
       } else {
