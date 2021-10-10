@@ -24,7 +24,7 @@ export const CircelDemo = ({
         cy="50%"
         r={RADIUS}
         stroke={colorBackgoundCircle}
-        stroke-width="5"
+        stroke-width="6"
         fill="transparent"
       />
       <circle
@@ -33,7 +33,7 @@ export const CircelDemo = ({
         cy="50%"
         r={RADIUS}
         stroke={colorCircle}
-        stroke-width="5"
+        stroke-width="6"
         stroke-dasharray={CIRCUMFERENCE}
         stroke-dashoffset={CIRCUMFERENCE / 3}
         fill="transparent"

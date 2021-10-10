@@ -21,6 +21,7 @@ export const Switch = ({
   const handleChange = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
       const newValue = e.currentTarget.checked;
+      e.currentTarget.checked = !newValue;
       onChange?.(newValue, e);
     },
     [onChange]

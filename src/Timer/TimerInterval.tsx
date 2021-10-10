@@ -1,4 +1,5 @@
 import { JSX } from "preact";
+import cn from "classnames";
 
 import { useCallback } from "preact/hooks";
 import { ETimerInterval, SetTimerInterval } from "./types";
@@ -58,12 +59,13 @@ export const TimerInterval = ({
           </legend>
           <input
             id={styles.focus}
-            className="vh"
+            className={cn(styles.input, "vh")}
             type="radio"
             name={optionName}
             value={ETimerInterval.Focus}
             checked={timerInterval === ETimerInterval.Focus}
             onChange={handleChange}
+            aria-label={focusTitle}
           />
           <label
             htmlFor={styles.focus}
@@ -75,12 +77,13 @@ export const TimerInterval = ({
           </label>
           <input
             id={styles.shortBreak}
-            className="vh"
+            className={cn(styles.input, "vh")}
             type="radio"
             name={optionName}
             value={ETimerInterval.ShortBreak}
             checked={timerInterval === ETimerInterval.ShortBreak}
             onChange={handleChange}
+            aria-label={shortBreakTitle}
           />
           <label
             htmlFor={styles.shortBreak}
@@ -94,12 +97,13 @@ export const TimerInterval = ({
             <>
               <input
                 id={styles.longBreak}
-                className="vh"
+                className={cn(styles.input, "vh")}
                 type="radio"
                 name={optionName}
                 value={ETimerInterval.LongBreak}
                 checked={timerInterval === ETimerInterval.LongBreak}
                 onChange={handleChange}
+                aria-label={shortLongTitle}
               />
               <label
                 htmlFor={styles.longBreak}

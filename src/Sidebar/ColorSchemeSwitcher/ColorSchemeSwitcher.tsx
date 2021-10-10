@@ -5,10 +5,10 @@ import cn from "classnames";
 import { ColorScheme, SettingName } from "../../Settings/types";
 
 import { useSettings } from "../../Settings/useSettings";
-
-import styles from "./ColorSchemeSwitcher.css";
 import { useTranslate } from "../../locales/useTranslate";
 import { LocaleLabelName } from "../../locales/types";
+
+import styles from "./ColorSchemeSwitcher.css";
 
 const html = document.documentElement;
 
@@ -26,9 +26,11 @@ export const ColorSchemeSwitcher = (): JSX.Element => {
   const t = useTranslate();
   const { getSetting, setSetting } = useSettings();
 
+  const colorScheme = getSetting(SettingName.colorScheme);
+
   useLayoutEffect(() => {
-    setColorScheme(colorSchemes[getSetting(SettingName.colorScheme)]);
-  }, []);
+    setColorScheme(colorSchemes[colorScheme]);
+  }, [colorScheme]);
 
   const handleChange = useCallback(
     (e: JSX.TargetedEvent<HTMLInputElement, Event>) => {
@@ -41,8 +43,6 @@ export const ColorSchemeSwitcher = (): JSX.Element => {
     },
     []
   );
-
-  const colorScheme = getSetting(SettingName.colorScheme);
 
   const lightTitle = t(
     LocaleLabelName.SidebarColorSchemeSwitcherOptionLightTitle
@@ -61,32 +61,50 @@ export const ColorSchemeSwitcher = (): JSX.Element => {
       <fieldset className={styles.switcher}>
         <legend className="vh">Color Scheme</legend>
         <input
-          className={cn(styles.switcherButton, styles.light)}
+          id={styles.light}
+          className={cn(styles.input, "vh")}
           type="radio"
           name={optionName}
           value={ColorScheme.Light}
           checked={colorScheme === ColorScheme.Light}
           onChange={handleChange}
+          aria-label={lightTitle}
+        />
+        <label
+          htmlFor={styles.light}
+          className={cn(styles.switcherButton, styles.light)}
           title={lightTitle}
           aria-label={lightTitle}
         />
         <input
-          className={cn(styles.switcherButton, styles.auto)}
+          id={styles.auto}
+          className={cn(styles.input, "vh")}
           type="radio"
           name={optionName}
           value={ColorScheme.Auto}
           checked={colorScheme === ColorScheme.Auto}
           onChange={handleChange}
+          aria-label={autoTitle}
+        />
+        <label
+          htmlFor={styles.auto}
+          className={cn(styles.switcherButton, styles.auto)}
           title={autoTitle}
           aria-label={autoTitle}
         />
         <input
-          className={cn(styles.switcherButton, styles.dark)}
+          id={styles.dark}
+          className={cn(styles.input, "vh")}
           type="radio"
           name={optionName}
           value={ColorScheme.Dark}
           checked={colorScheme === ColorScheme.Dark}
           onChange={handleChange}
+          aria-label={darkTitle}
+        />
+        <label
+          htmlFor={styles.dark}
+          className={cn(styles.switcherButton, styles.dark)}
           title={darkTitle}
           aria-label={darkTitle}
         />

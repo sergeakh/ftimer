@@ -42,7 +42,7 @@ export const Circles = ({ setSetting, getSetting }: Props): JSX.Element => {
   )})`;
 
   return (
-    <>
+    <div>
       <h3 className={styles.subTitle}>{titleCircle}</h3>
       <CommonCircleColors
         colorCircleAdvanced={SettingName.colorCircleAdvanced}
@@ -151,6 +151,6 @@ export const Circles = ({ setSetting, getSetting }: Props): JSX.Element => {
           )}
         </>
       )}
-    </>
+    </div>
   );
 };

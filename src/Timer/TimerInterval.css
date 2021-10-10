@@ -65,13 +65,13 @@
   }
 }
 
-input:checked + .switcher-button {
+.input:checked + .switcher-button {
   cursor: default;
   color: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
-  input:checked + .switcher-button {
+  .input:checked + .switcher-button {
     color: #000;
   }
 }
@@ -89,13 +89,13 @@ input:checked + .switcher-button {
   z-index: -1;
 }
 
-input:focus-visible ~ .wrap-switcher-status {
+.input:focus-visible ~ .wrap-switcher-status {
   outline: 2px solid #000;
   outline-offset: 4px;
 }
 
 @media (prefers-color-scheme: dark) {
-  input:focus-visible ~ .wrap-switcher-status {
+  .input:focus-visible ~ .wrap-switcher-status {
     outline-color: #fff;
   }
 }

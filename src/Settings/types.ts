@@ -7,6 +7,9 @@ export const enum SettingName {
   longBreakEvery = "longBreakEvery",
   autoStartBreak = "autoStartBreak",
   autoStartNextFocus = "autoStartNextFocus",
+  notificationFocus = "notificationFocus",
+  notificationShortBreak = "notificationShortBreak",
+  notificationLongBreak = "notificationLongBreak",
   colorScheme = "colorScheme",
   colorCircleAdvanced = "colorCircleAdvanced",
   colorCircleLight = "colorCircleLight",
@@ -99,6 +102,9 @@ export type Settings = Readonly<{
   [SettingName.longBreakEvery]: number;
   [SettingName.autoStartBreak]: boolean;
   [SettingName.autoStartNextFocus]: boolean;
+  [SettingName.notificationFocus]: boolean;
+  [SettingName.notificationShortBreak]: boolean;
+  [SettingName.notificationLongBreak]: boolean;
   [SettingName.colorScheme]: ColorScheme;
   [SettingName.colorCircleAdvanced]: boolean;
   [SettingName.colorCircleLight]: string;

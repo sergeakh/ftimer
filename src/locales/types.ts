@@ -11,6 +11,7 @@ export const enum LocaleLabelName {
   TimerProcessControlButtonPauseTitle,
   TimerProcessControlButtonResumeTitle,
   TimerProcessControlButtonStopTitle,
+  TimerNotificationFinishLabel,
   SidebarMenuTimerTitle,
   SidebarMenuSettingsTitle,
   SidebarColorSchemeSwitcherTitle,
@@ -28,6 +29,7 @@ export const enum LocaleLabelName {
   SettingsCircleColorsAdvancedSettingsLabel,
   SettingsCircleColorsMainLabel,
   SettingsCircleColorsBackgroundLabel,
+  SettingsNotifications,
 }
 
 export type LocaleLabels = Readonly<{

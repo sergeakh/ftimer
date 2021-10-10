@@ -40,6 +40,7 @@
 
 .select-standart {
   appearance: none;
+  -webkit-appearance: none;
   background-color: transparent;
   border: none;
   padding: 10px;

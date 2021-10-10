@@ -12,6 +12,7 @@ const enum LocaleLabelName {
   TimerProcessControlButtonPauseTitle,
   TimerProcessControlButtonResumeTitle,
   TimerProcessControlButtonStopTitle,
+  TimerNotificationFinishLabel,
   SidebarMenuTimerTitle,
   SidebarMenuSettingsTitle,
   SidebarColorSchemeSwitcherTitle,
@@ -29,6 +30,7 @@ const enum LocaleLabelName {
   SettingsCircleColorsAdvancedSettingsLabel,
   SettingsCircleColorsMainLabel,
   SettingsCircleColorsBackgroundLabel,
+  SettingsNotifications,
 }
 
 export const labels = {
@@ -64,4 +66,6 @@ export const labels = {
     "Расширенные настройки",
   [LocaleLabelName.SettingsCircleColorsMainLabel]: "Первый цвет",
   [LocaleLabelName.SettingsCircleColorsBackgroundLabel]: "Второй цвет",
+  [LocaleLabelName.SettingsNotifications]: "Уведомления",
+  [LocaleLabelName.TimerNotificationFinishLabel]: "Закончен",
 };

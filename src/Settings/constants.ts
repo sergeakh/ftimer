@@ -8,13 +8,15 @@ export const DEFAULT_LONG_BREAK_DURATION = 20;
 export const DEFAULT_LONG_BREAK_EVERY = 4;
 export const DEFAULT_AUTO_START_BREAK = false;
 export const DEFAULT_AUTO_START_NEXT_FOCUS = false;
+export const DEFAULT_NOTIFICATION_FOCUS = false;
+export const DEFAULT_NOTIFICATION_BREAK = false;
 export const DEFAULT_COLOR_SCHEME = ColorScheme.Auto;
 export const DEFAULT_COLOR_CIRCLE_ADVANCED = false;
 export const DEFAULT_COLOR_CIRCLE_LIGHT = "#000000";
 export const DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT = "#eeeeee";
 export const DEFAULT_COLOR_CIRCLE_DARK = "#ffffff";
 export const DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK = "#222222";
-export const DEFAULT_TAB_CIRCLE = true;
+export const DEFAULT_TAB_CIRCLE = false;
 
 export const langs = {
   [LocaleName.RU]: "RU",
@@ -31,6 +33,9 @@ export const defaultSettings: Readonly<Settings> = {
   [SettingName.longBreakEvery]: DEFAULT_LONG_BREAK_EVERY,
   [SettingName.autoStartBreak]: DEFAULT_AUTO_START_BREAK,
   [SettingName.autoStartNextFocus]: DEFAULT_AUTO_START_NEXT_FOCUS,
+  [SettingName.notificationFocus]: DEFAULT_NOTIFICATION_FOCUS,
+  [SettingName.notificationShortBreak]: DEFAULT_NOTIFICATION_BREAK,
+  [SettingName.notificationLongBreak]: DEFAULT_NOTIFICATION_BREAK,
   [SettingName.colorScheme]: DEFAULT_COLOR_SCHEME,
   [SettingName.colorCircleAdvanced]: DEFAULT_COLOR_CIRCLE_ADVANCED,
   [SettingName.colorCircleLight]: DEFAULT_COLOR_CIRCLE_LIGHT,

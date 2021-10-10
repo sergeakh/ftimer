@@ -12,3 +12,8 @@ export const isIOS = (): boolean =>
   (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
 export const isMobile = (): boolean => /Mobile|Android|iP(hone|od)/.test(ua);
+
+export const isNotification = (): boolean =>
+  "Notification" in window && !!navigator.serviceWorker;
+export const isNotificationGranted = (): boolean =>
+  window?.Notification?.permission === "granted";

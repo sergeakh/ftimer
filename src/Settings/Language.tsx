@@ -4,12 +4,12 @@ import { useCallback } from "preact/hooks";
 import { Select } from "../ui/Select";
 
 import { SettingName, LocaleName, SetSetting, GetSetting } from "./types";
+import { useTranslate } from "../locales/useTranslate";
+import { LocaleLabelName } from "../locales/types";
 
 import { langs } from "./constants";
 
 import styles from "./Settings.css";
-import { useTranslate } from "../locales/useTranslate";
-import { LocaleLabelName } from "../locales/types";
 
 const langOptions = [
   { title: langs[LocaleName.RU], value: LocaleName.RU },

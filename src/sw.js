@@ -85,3 +85,26 @@ const fromCache = async (e) => {
 self.addEventListener("fetch", (e) => {
   e.respondWith(fromCache(e));
 });
+
+self.addEventListener("notificationclick", (event) => {
+  const rootUrl = new URL("/", location).href;
+  event.notification.close();
+  event.waitUntil(
+    // eslint-disable-next-line no-undef
+    clients
+      .matchAll({
+        type: "window",
+      })
+      // eslint-disable-next-line consistent-return
+      .then((clientList) => {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const client of clientList) {
+          if (client.url === rootUrl && "focus" in client) {
+            return client.focus();
+          }
+        }
+        // eslint-disable-next-line no-undef
+        if (clients.openWindow) return clients.openWindow("/");
+      })
+  );
+});

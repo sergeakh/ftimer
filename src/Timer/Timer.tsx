@@ -19,6 +19,7 @@ import {
   Status as TimerIntervalsTimesStatus,
 } from "./hooks/useTimerIntervalsTimes";
 import { useSettings } from "../Settings/useSettings";
+import { useNotification } from "./hooks/useNotification";
 
 import { CIRCLE_RESTORE_TIME } from "./constants";
 
@@ -168,6 +169,8 @@ export const Timer = (): JSX.Element => {
       return getSetting(SettingName.longBreakDuration);
     return 0;
   }, [timerInterval]);
+
+  useNotification(status === Status.FinishStart, timerInterval);
 
   useEffect(() => {
     if (status === Status.FinishStart) {

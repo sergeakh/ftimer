@@ -12,14 +12,14 @@ import { SettingName } from "./types";
 import { Switch } from "../ui/Switch";
 import { Input } from "../ui/Input";
 
+import { LocaleLabelName } from "../locales/types";
 import { Circles } from "./Circles";
 import { Language } from "./Language";
-
+import { Notifications } from "./Notifications";
+import { useTranslate } from "../locales/useTranslate";
 import { useSettings } from "./useSettings";
 
 import styles from "./Settings.css";
-import { useTranslate } from "../locales/useTranslate";
-import { LocaleLabelName } from "../locales/types";
 
 const getClearedDurationValue = (value: string): number => {
   const newValue = +value.replace(/\D/g, "") || MIN_DURATION;
@@ -165,6 +165,7 @@ export const Settings = (): JSX.Element => {
             checked={getSetting(SettingName.autoStartNextFocus)}
           />
         </div>
+        <Notifications getSetting={getSetting} setSetting={setSetting} />
         <Circles getSetting={getSetting} setSetting={setSetting} />
       </form>
     </div>
