@@ -1,11 +1,13 @@
 import { useCallback, useEffect } from "preact/hooks";
+import { SettingName } from "../../../Settings/types";
+import { useSettings } from "../../../Settings/useSettings";
 
 import { isMobile } from "../../../utils/browser";
 import { getСircumference, noop } from "../../../utils/common";
 import { ETimerInterval } from "../../types";
 
 import { getProgress } from "../common";
-import { useCircleColor } from "./useCircleColor";
+import { useTabCircleColor } from "./useTabCircleColor";
 
 export const enum Status {
   Start,
@@ -68,14 +70,19 @@ export const useIconStatus = (
 ): void => {
   if (isMobile()) return;
 
-  const [circleColor, circleBackgroundColor] = useCircleColor({
+  const { getSetting } = useSettings();
+
+  const tabCircle = getSetting(SettingName.tabCircle);
+
+  const [circleColor, circleBackgroundColor] = useTabCircleColor({
     timerInterval,
     ignoreColorSchemeChoise: true,
   });
 
+  const enabled = tabCircle && iconDefault && icon;
+
   useEffect(() => {
-    if (!iconDefault) return;
-    if (!icon) return;
+    if (!enabled) return;
 
     if (status === Status.Start) {
       icon.remove();
@@ -95,7 +102,7 @@ export const useIconStatus = (
   }, []);
 
   useEffect(() => {
-    if (!icon) return noop;
+    if (!enabled) return noop;
 
     if (status === Status.Start) {
       showIcon(iconDefaultHref);

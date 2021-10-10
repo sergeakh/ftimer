@@ -25,6 +25,24 @@ export const enum SettingName {
   colorCircleAdvancedShortBreakBackgroundDark = "colorCircleAdvancedShortBreakBackgroundDark",
   colorCircleAdvancedLongBreakDark = "colorCircleAdvancedLongBreakDark",
   colorCircleAdvancedLongBreakBackgroundDark = "colorCircleAdvancedLongBreakBackgroundDark",
+  tabCircle = "tabCircle",
+  colorTabCircleAdvanced = "colorTabCircleAdvanced",
+  colorTabCircleLight = "colorTabCircleLight",
+  colorTabCircleBackgroundLight = "colorTabCircleBackgroundLight",
+  colorTabCircleDark = "colorTabCircleDark",
+  colorTabCircleBackgroundDark = "colorTabCircleBackgroundDark",
+  colorTabCircleAdvancedFocusLight = "colorTabCircleAdvancedFocusLight",
+  colorTabCircleAdvancedFocusBackgroundLight = "colorTabCircleAdvancedFocusBackgroundLight",
+  colorTabCircleAdvancedShortBreakLight = "colorTabCircleAdvancedShortBreakLight",
+  colorTabCircleAdvancedShortBreakBackgroundLight = "colorTabCircleAdvancedShortBreakBackgroundLight",
+  colorTabCircleAdvancedLongBreakLight = "colorTabCircleAdvancedLongBreakLight",
+  colorTabCircleAdvancedLongBreakBackgroundLight = "colorTabCircleAdvancedLongBreakBackgroundLight",
+  colorTabCircleAdvancedFocusDark = "colorTabCircleAdvancedFocusDark",
+  colorTabCircleAdvancedFocusBackgroundDark = "colorTabCircleAdvancedFocusBackgroundDark",
+  colorTabCircleAdvancedShortBreakDark = "colorTabCircleAdvancedShortBreakDark",
+  colorTabCircleAdvancedShortBreakBackgroundDark = "colorTabCircleAdvancedShortBreakBackgroundDark",
+  colorTabCircleAdvancedLongBreakDark = "colorTabCircleAdvancedLongBreakDark",
+  colorTabCircleAdvancedLongBreakBackgroundDark = "colorTabCircleAdvancedLongBreakBackgroundDark",
 }
 
 export type ColorSettingName =
@@ -43,7 +61,23 @@ export type ColorSettingName =
   | SettingName.colorCircleAdvancedShortBreakDark
   | SettingName.colorCircleAdvancedShortBreakBackgroundDark
   | SettingName.colorCircleAdvancedLongBreakDark
-  | SettingName.colorCircleAdvancedLongBreakBackgroundDark;
+  | SettingName.colorCircleAdvancedLongBreakBackgroundDark
+  | SettingName.colorTabCircleLight
+  | SettingName.colorTabCircleBackgroundLight
+  | SettingName.colorTabCircleDark
+  | SettingName.colorTabCircleBackgroundDark
+  | SettingName.colorTabCircleAdvancedFocusLight
+  | SettingName.colorTabCircleAdvancedFocusBackgroundLight
+  | SettingName.colorTabCircleAdvancedShortBreakLight
+  | SettingName.colorTabCircleAdvancedShortBreakBackgroundLight
+  | SettingName.colorTabCircleAdvancedLongBreakLight
+  | SettingName.colorTabCircleAdvancedLongBreakBackgroundLight
+  | SettingName.colorTabCircleAdvancedFocusDark
+  | SettingName.colorTabCircleAdvancedFocusBackgroundDark
+  | SettingName.colorTabCircleAdvancedShortBreakDark
+  | SettingName.colorTabCircleAdvancedShortBreakBackgroundDark
+  | SettingName.colorTabCircleAdvancedLongBreakDark
+  | SettingName.colorTabCircleAdvancedLongBreakBackgroundDark;
 
 export const enum LocaleName {
   RU = "ru",
@@ -83,6 +117,24 @@ export type Settings = Readonly<{
   [SettingName.colorCircleAdvancedShortBreakBackgroundDark]: string;
   [SettingName.colorCircleAdvancedLongBreakDark]: string;
   [SettingName.colorCircleAdvancedLongBreakBackgroundDark]: string;
+  [SettingName.tabCircle]: boolean;
+  [SettingName.colorTabCircleAdvanced]: boolean;
+  [SettingName.colorTabCircleLight]: string;
+  [SettingName.colorTabCircleBackgroundLight]: string;
+  [SettingName.colorTabCircleDark]: string;
+  [SettingName.colorTabCircleBackgroundDark]: string;
+  [SettingName.colorTabCircleAdvancedFocusLight]: string;
+  [SettingName.colorTabCircleAdvancedFocusBackgroundLight]: string;
+  [SettingName.colorTabCircleAdvancedShortBreakLight]: string;
+  [SettingName.colorTabCircleAdvancedShortBreakBackgroundLight]: string;
+  [SettingName.colorTabCircleAdvancedLongBreakLight]: string;
+  [SettingName.colorTabCircleAdvancedLongBreakBackgroundLight]: string;
+  [SettingName.colorTabCircleAdvancedFocusDark]: string;
+  [SettingName.colorTabCircleAdvancedFocusBackgroundDark]: string;
+  [SettingName.colorTabCircleAdvancedShortBreakDark]: string;
+  [SettingName.colorTabCircleAdvancedShortBreakBackgroundDark]: string;
+  [SettingName.colorTabCircleAdvancedLongBreakDark]: string;
+  [SettingName.colorTabCircleAdvancedLongBreakBackgroundDark]: string;
 }>;
 
 export type SetSetting = <T extends SettingName>(

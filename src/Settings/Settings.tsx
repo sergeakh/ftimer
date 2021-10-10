@@ -12,7 +12,7 @@ import { SettingName } from "./types";
 import { Switch } from "../ui/Switch";
 import { Input } from "../ui/Input";
 
-import { CircleColors } from "./CircleColors";
+import { Circles } from "./Circles";
 import { Language } from "./Language";
 
 import { useSettings } from "./useSettings";
@@ -165,7 +165,7 @@ export const Settings = (): JSX.Element => {
             checked={getSetting(SettingName.autoStartNextFocus)}
           />
         </div>
-        <CircleColors getSetting={getSetting} setSetting={setSetting} />
+        <Circles getSetting={getSetting} setSetting={setSetting} />
       </form>
     </div>
   );

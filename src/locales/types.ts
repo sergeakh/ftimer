@@ -23,10 +23,11 @@ export const enum LocaleLabelName {
   SettingsAutoStartTitle,
   SettingsAutoStartBreakLabel,
   SettingsAutoStartNextFocusLabel,
-  SettingsColorsTitle,
-  SettingsColorsAdvancedSettingsLabel,
-  SettingsColorsCircleMainLabel,
-  SettingsColorsCircleBackgroundLabel,
+  SettingsCircleTitle,
+  SettingsTabCircleTitle,
+  SettingsCircleColorsAdvancedSettingsLabel,
+  SettingsCircleColorsMainLabel,
+  SettingsCircleColorsBackgroundLabel,
 }
 
 export type LocaleLabels = Readonly<{

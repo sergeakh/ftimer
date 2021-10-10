@@ -24,10 +24,11 @@ const enum LocaleLabelName {
   SettingsAutoStartTitle,
   SettingsAutoStartBreakLabel,
   SettingsAutoStartNextFocusLabel,
-  SettingsColorsTitle,
-  SettingsColorsAdvancedSettingsLabel,
-  SettingsColorsCircleMainLabel,
-  SettingsColorsCircleBackgroundLabel,
+  SettingsCircleTitle,
+  SettingsTabCircleTitle,
+  SettingsCircleColorsAdvancedSettingsLabel,
+  SettingsCircleColorsMainLabel,
+  SettingsCircleColorsBackgroundLabel,
 }
 
 export const labels = {
@@ -57,9 +58,10 @@ export const labels = {
   [LocaleLabelName.SettingsAutoStartTitle]: "Автоматический старт",
   [LocaleLabelName.SettingsAutoStartBreakLabel]: "Перерыв",
   [LocaleLabelName.SettingsAutoStartNextFocusLabel]: "Следующий фокус",
-  [LocaleLabelName.SettingsColorsTitle]: "Цвета",
-  [LocaleLabelName.SettingsColorsAdvancedSettingsLabel]:
+  [LocaleLabelName.SettingsCircleTitle]: "Прогресс круг",
+  [LocaleLabelName.SettingsTabCircleTitle]: "Прогресс круг во вкладке",
+  [LocaleLabelName.SettingsCircleColorsAdvancedSettingsLabel]:
     "Расширенные настройки",
-  [LocaleLabelName.SettingsColorsCircleMainLabel]: "Круг",
-  [LocaleLabelName.SettingsColorsCircleBackgroundLabel]: "Фон круга",
+  [LocaleLabelName.SettingsCircleColorsMainLabel]: "Первый цвет",
+  [LocaleLabelName.SettingsCircleColorsBackgroundLabel]: "Второй цвет",
 };

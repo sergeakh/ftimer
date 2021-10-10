@@ -1,5 +1,5 @@
 import { JSX } from "preact";
-import { useCallback, useState } from "preact/hooks";
+import { useCallback, useEffect, useState } from "preact/hooks";
 import cn from "classnames";
 
 import styles from "./Tabs.css";
@@ -48,6 +48,12 @@ export type Props = {
 export const Tabs = ({ tabs }: Props): JSX.Element => {
   const [index, setIndex] = useState(0);
 
+  useEffect(() => {
+    if (tabs.length - 1 < index) {
+      setIndex(tabs.length - 1);
+    }
+  }, [tabs.length]);
+
   return (
     <div className={styles.wrap}>
       <ul className={styles.ul}>
@@ -67,7 +73,7 @@ export const Tabs = ({ tabs }: Props): JSX.Element => {
           }%)`}
         ></div>
       </ul>
-      <div className={styles.content}>{tabs[index].content}</div>
+      <div className={styles.content}>{tabs[index]?.content}</div>
     </div>
   );
 };

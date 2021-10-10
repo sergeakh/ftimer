@@ -14,6 +14,7 @@ export const DEFAULT_COLOR_CIRCLE_LIGHT = "#000000";
 export const DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT = "#eeeeee";
 export const DEFAULT_COLOR_CIRCLE_DARK = "#ffffff";
 export const DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK = "#222222";
+export const DEFAULT_TAB_CIRCLE = true;
 
 export const langs = {
   [LocaleName.RU]: "RU",
@@ -54,6 +55,34 @@ export const defaultSettings: Readonly<Settings> = {
     DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
   [SettingName.colorCircleAdvancedLongBreakDark]: DEFAULT_COLOR_CIRCLE_DARK,
   [SettingName.colorCircleAdvancedLongBreakBackgroundDark]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
+  [SettingName.tabCircle]: DEFAULT_TAB_CIRCLE,
+  [SettingName.colorTabCircleAdvanced]: DEFAULT_COLOR_CIRCLE_ADVANCED,
+  [SettingName.colorTabCircleLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorTabCircleBackgroundLight]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
+  [SettingName.colorTabCircleDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorTabCircleBackgroundDark]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
+  [SettingName.colorTabCircleAdvancedFocusLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorTabCircleAdvancedFocusBackgroundLight]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
+  [SettingName.colorTabCircleAdvancedShortBreakLight]:
+    DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorTabCircleAdvancedShortBreakBackgroundLight]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
+  [SettingName.colorTabCircleAdvancedLongBreakLight]:
+    DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorTabCircleAdvancedLongBreakBackgroundLight]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
+  [SettingName.colorTabCircleAdvancedFocusDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorTabCircleAdvancedFocusBackgroundDark]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
+  [SettingName.colorTabCircleAdvancedShortBreakDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorTabCircleAdvancedShortBreakBackgroundDark]:
+    DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
+  [SettingName.colorTabCircleAdvancedLongBreakDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorTabCircleAdvancedLongBreakBackgroundDark]:
     DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
 };
 

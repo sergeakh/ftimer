@@ -1,6 +1,6 @@
 import { JSX } from "preact";
 
-import { getСircumference } from "../utils/common";
+import { getСircumference } from "../../utils/common";
 
 import styles from "./CircleDemo.css";
 
