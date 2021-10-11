@@ -22,6 +22,8 @@ export const DEFAULT_NOTIFICATION_FOCUS = false;
 export const DEFAULT_NOTIFICATION_BREAK = false;
 export const DEFAULT_COLOR_SCHEME = ColorScheme.Auto;
 export const DEFAULT_COLOR_CIRCLE_ADVANCED = false;
+export const DEFAULT_COLOR_CIRCLE_LIGHT_START = "#5ef3a6";
+export const DEFAULT_COLOR_CIRCLE_DARK_START = "#2d8f6a";
 export const DEFAULT_COLOR_CIRCLE_LIGHT = "#000000";
 export const DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT = "#eeeeee";
 export const DEFAULT_COLOR_CIRCLE_DARK = "#ffffff";
@@ -56,10 +58,10 @@ export const defaultSettings: Readonly<Settings> = {
   [SettingName.notificationLongBreak]: DEFAULT_NOTIFICATION_BREAK,
   [SettingName.colorScheme]: DEFAULT_COLOR_SCHEME,
   [SettingName.colorCircleAdvanced]: DEFAULT_COLOR_CIRCLE_ADVANCED,
-  [SettingName.colorCircleLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
+  [SettingName.colorCircleLight]: DEFAULT_COLOR_CIRCLE_LIGHT_START,
   [SettingName.colorCircleBackgroundLight]:
     DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT,
-  [SettingName.colorCircleDark]: DEFAULT_COLOR_CIRCLE_DARK,
+  [SettingName.colorCircleDark]: DEFAULT_COLOR_CIRCLE_DARK_START,
   [SettingName.colorCircleBackgroundDark]: DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
   [SettingName.colorCircleAdvancedFocusLight]: DEFAULT_COLOR_CIRCLE_LIGHT,
   [SettingName.colorCircleAdvancedFocusBackgroundLight]:
