@@ -46,6 +46,8 @@ export const enum SettingName {
   colorTabCircleAdvancedShortBreakBackgroundDark = "colorTabCircleAdvancedShortBreakBackgroundDark",
   colorTabCircleAdvancedLongBreakDark = "colorTabCircleAdvancedLongBreakDark",
   colorTabCircleAdvancedLongBreakBackgroundDark = "colorTabCircleAdvancedLongBreakBackgroundDark",
+  soundName = "soundAlarmName",
+  soundVolume = "soundAlarmVolume",
 }
 
 export type ColorSettingName =
@@ -91,6 +93,12 @@ export const enum ColorScheme {
   Auto = "Auto",
   Light = "Light",
   Dark = "Dark",
+}
+
+export const enum SoundName {
+  S0 = "0",
+  S1 = "1",
+  S2 = "2",
 }
 
 export type Settings = Readonly<{
@@ -141,6 +149,8 @@ export type Settings = Readonly<{
   [SettingName.colorTabCircleAdvancedShortBreakBackgroundDark]: string;
   [SettingName.colorTabCircleAdvancedLongBreakDark]: string;
   [SettingName.colorTabCircleAdvancedLongBreakBackgroundDark]: string;
+  [SettingName.soundName]: SoundName;
+  [SettingName.soundVolume]: number;
 }>;
 
 export type SetSetting = <T extends SettingName>(

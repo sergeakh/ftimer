@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef } from "preact/hooks";
 import { isIOS } from "../utils/browser";
 
-import src from "../assets/alarm.mp3";
+import { sounds } from "../Settings/constants";
+import { useSettings } from "../Settings/useSettings";
+import { SettingName } from "../Settings/types";
 
 type AudioObj = {
   ctx: AudioContext;
@@ -10,6 +12,7 @@ type AudioObj = {
 };
 
 export const useAlarm = (enabled: boolean): (() => void) => {
+  const { getSetting } = useSettings();
   const audioObj = useRef<AudioObj>(null);
 
   useEffect(() => {
@@ -43,7 +46,7 @@ export const useAlarm = (enabled: boolean): (() => void) => {
         audioElem.muted = false;
       }
 
-      audioElem.src = src;
+      audioElem.src = sounds[getSetting(SettingName.soundName)];
       ganiNode.gain.value = 0;
 
       if (isIOS()) {
@@ -51,9 +54,9 @@ export const useAlarm = (enabled: boolean): (() => void) => {
         audioElem.pause();
       }
 
-      ganiNode.gain.value = 1;
+      ganiNode.gain.value = getSetting(SettingName.soundVolume) / 100;
     }
-  }, []);
+  }, [getSetting]);
 
   useEffect(() => {
     if (enabled) {

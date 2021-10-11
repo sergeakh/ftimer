@@ -1,4 +1,14 @@
-import { SettingName, Settings, ColorScheme, LocaleName } from "./types";
+import sound0Src from "../assets/sounds/0.mp3";
+import sound1Src from "../assets/sounds/1.mp3";
+import sound2Src from "../assets/sounds/2.mp3";
+
+import {
+  SettingName,
+  Settings,
+  ColorScheme,
+  LocaleName,
+  SoundName,
+} from "./types";
 
 export const DEFAULT_LANG = LocaleName.EN;
 export const DEFAULT_FOCUS_DURATION = 25;
@@ -17,6 +27,14 @@ export const DEFAULT_COLOR_CIRCLE_BACKGROUND_LIGHT = "#eeeeee";
 export const DEFAULT_COLOR_CIRCLE_DARK = "#ffffff";
 export const DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK = "#222222";
 export const DEFAULT_TAB_CIRCLE = false;
+export const DEFAULT_SOUND_ALARM_NAME = SoundName.S0;
+export const DEFAULT_SOUND_ALARM_VOLUME = 50;
+
+export const sounds = {
+  [SoundName.S0]: sound0Src,
+  [SoundName.S1]: sound1Src,
+  [SoundName.S2]: sound2Src,
+};
 
 export const langs = {
   [LocaleName.RU]: "RU",
@@ -89,6 +107,8 @@ export const defaultSettings: Readonly<Settings> = {
   [SettingName.colorTabCircleAdvancedLongBreakDark]: DEFAULT_COLOR_CIRCLE_DARK,
   [SettingName.colorTabCircleAdvancedLongBreakBackgroundDark]:
     DEFAULT_COLOR_CIRCLE_BACKGROUND_DARK,
+  [SettingName.soundName]: DEFAULT_SOUND_ALARM_NAME,
+  [SettingName.soundVolume]: DEFAULT_SOUND_ALARM_VOLUME,
 };
 
 export const MIN_LONG_BREAK_EVERY = 1;

@@ -20,8 +20,6 @@ const requestPermision = async () => {
 
     return false;
   } catch (err) {
-    console.log(err);
-
     return false;
   }
 };

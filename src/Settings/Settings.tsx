@@ -15,6 +15,7 @@ import { Input } from "../ui/Input";
 import { LocaleLabelName } from "../locales/types";
 import { Circles } from "./Circles";
 import { Language } from "./Language";
+import { Sounds } from "./Sounds";
 import { Notifications } from "./Notifications";
 import { useTranslate } from "../locales/useTranslate";
 import { useSettings } from "./useSettings";
@@ -165,6 +166,7 @@ export const Settings = (): JSX.Element => {
             checked={getSetting(SettingName.autoStartNextFocus)}
           />
         </div>
+        <Sounds getSetting={getSetting} setSetting={setSetting} />
         <Notifications getSetting={getSetting} setSetting={setSetting} />
         <Circles getSetting={getSetting} setSetting={setSetting} />
       </form>

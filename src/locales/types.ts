@@ -30,6 +30,9 @@ export const enum LocaleLabelName {
   SettingsCircleColorsMainLabel,
   SettingsCircleColorsBackgroundLabel,
   SettingsNotifications,
+  SettingsSounds,
+  SettingsSoundLabel,
+  SettingsSoundVolumeLabel,
 }
 
 export type LocaleLabels = Readonly<{

@@ -31,6 +31,9 @@ const enum LocaleLabelName {
   SettingsCircleColorsMainLabel,
   SettingsCircleColorsBackgroundLabel,
   SettingsNotifications,
+  SettingsSounds,
+  SettingsSoundsAlarmLabel,
+  SettingsSoundsAlarmVolumeLabel,
 }
 
 export const labels = {
@@ -68,4 +71,7 @@ export const labels = {
   [LocaleLabelName.SettingsCircleColorsBackgroundLabel]: "Second Color",
   [LocaleLabelName.SettingsNotifications]: "Notifications",
   [LocaleLabelName.TimerNotificationFinishLabel]: "Completed",
+  [LocaleLabelName.SettingsSounds]: "Sounds",
+  [LocaleLabelName.SettingsSoundsAlarmLabel]: "Sound",
+  [LocaleLabelName.SettingsSoundsAlarmVolumeLabel]: "Volume",
 };
