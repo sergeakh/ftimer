@@ -40,7 +40,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  padding: 20px 10px 20px 10px;
+  padding: 20px 10px;
   height: 30px;
   color: #000;
   cursor: pointer;
@@ -133,10 +133,10 @@
   transform: translateX(0);
 }
 
-#shortBreak:checked ~ .wrap-switcher-status > .switcher-status {
+#short-break:checked ~ .wrap-switcher-status > .switcher-status {
   transform: translateX(100%);
 }
 
-#longBreak:checked ~ .wrap-switcher-status > .switcher-status {
+#long-break:checked ~ .wrap-switcher-status > .switcher-status {
   transform: translateX(200%);
 }

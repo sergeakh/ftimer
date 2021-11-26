@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 
-.wrap-sidebar_hidden {
+.wrap-sidebar-hidden {
   pointer-events: none;
 }
 
@@ -18,12 +18,12 @@
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgb(0 0 0 / 40%);
   will-change: opacity;
   transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
 }
 
-.sidebar-overlay_hidden {
+.sidebar-overlay-hidden {
   opacity: 0;
 }
 
@@ -48,7 +48,7 @@
   }
 }
 
-.sidebar_hidden {
+.sidebar-hidden {
   transform: translateX(-100%);
 }
 

@@ -6,14 +6,16 @@ import { useSettings } from "../Settings/useSettings";
 import { SettingName } from "../Settings/types";
 
 type AudioObj = {
-  ctx: AudioContext;
-  gainNode: GainNode;
-  elem: HTMLAudioElement;
+  obj: {
+    ctx: AudioContext;
+    gainNode: GainNode;
+    elem: HTMLAudioElement;
+  } | null;
 };
 
 export const useAlarm = (enabled: boolean): (() => void) => {
   const { getSetting } = useSettings();
-  const audioObj = useRef<AudioObj>(null);
+  const audioObj = useRef<AudioObj>({ obj: null });
 
   useEffect(() => {
     const audioElement = new Audio();
@@ -26,11 +28,14 @@ export const useAlarm = (enabled: boolean): (() => void) => {
     track.connect(gainNode).connect(audioCtx.destination);
 
     const newAudioObj: AudioObj = {
-      ctx: audioCtx,
-      gainNode,
-      elem: audioElement,
+      obj: {
+        ctx: audioCtx,
+        gainNode,
+        elem: audioElement,
+      },
     };
 
+    // eslint-disable-new-line
     audioObj.current = newAudioObj;
 
     return () => {
@@ -39,8 +44,9 @@ export const useAlarm = (enabled: boolean): (() => void) => {
   }, []);
 
   const init = useCallback(() => {
-    const audioElem = audioObj.current?.elem;
-    const ganiNode = audioObj.current?.gainNode;
+    const aObj = audioObj.current?.obj;
+    const audioElem = aObj?.elem;
+    const ganiNode = aObj?.gainNode;
     if (audioElem && ganiNode) {
       if (audioElem.muted) {
         audioElem.muted = false;
@@ -60,11 +66,11 @@ export const useAlarm = (enabled: boolean): (() => void) => {
 
   useEffect(() => {
     if (enabled) {
-      if (audioObj.current?.ctx.state === "suspended") {
-        audioObj.current.ctx.resume();
+      if (audioObj.current?.obj?.ctx.state === "suspended") {
+        audioObj.current?.obj?.ctx.resume();
       }
 
-      const audioElem = audioObj.current?.elem;
+      const audioElem = audioObj.current?.obj?.elem;
       if (audioElem) {
         audioElem.play();
       }
