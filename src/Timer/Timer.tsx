@@ -170,7 +170,7 @@ export const Timer = (): JSX.Element => {
     return 0;
   }, [timerInterval]);
 
-  useNotification(status === Status.FinishStart, timerInterval);
+  useNotification(status === Status.FinishStart, timerInterval, getSetting);
 
   useEffect(() => {
     if (status === Status.FinishStart) {

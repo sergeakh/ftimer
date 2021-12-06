@@ -7,10 +7,12 @@ import { useTranslate } from "../../locales/useTranslate";
 
 import iconSrc from "../../assets/favicon/icon-512.png";
 import iconEmptySrc from "../../assets/favicon/empty.png";
+import { GetSetting, SettingName } from "../../Settings/types";
 
 export const useNotification = (
   isFinish: boolean,
-  timerInterval: ETimerInterval
+  timerInterval: ETimerInterval,
+  getSetting: GetSetting
 ): void => {
   const t = useTranslate();
 
@@ -38,8 +40,27 @@ export const useNotification = (
     return "";
   }, [timerInterval]);
 
+  const notificationFocus =
+    timerInterval === ETimerInterval.Focus &&
+    getSetting(SettingName.notificationFocus) &&
+    isNotificationGranted() &&
+    isNotification();
+  const notificationShortBreak =
+    timerInterval === ETimerInterval.ShortBreak &&
+    getSetting(SettingName.notificationShortBreak) &&
+    isNotificationGranted() &&
+    isNotification();
+  const notificationLongBreak =
+    timerInterval === ETimerInterval.LongBreak &&
+    getSetting(SettingName.notificationLongBreak) &&
+    isNotificationGranted() &&
+    isNotification();
+
   useEffect(() => {
-    if (isNotification() && isNotificationGranted() && isFinish) {
+    if (
+      (notificationFocus || notificationShortBreak || notificationLongBreak) &&
+      isFinish
+    ) {
       const title = getNotificationTitle();
       const opts = {
         icon: iconEmptySrc,
