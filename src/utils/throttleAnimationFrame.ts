@@ -13,6 +13,7 @@ export function throttleAnimationFrame<T extends (...args: any) => any>(
   function wrap(this: any, ...args: any[]) {
     if (isThrottled) {
       savedArgs = args;
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       savedThis = this;
       return;
     }
