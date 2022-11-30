@@ -16,6 +16,7 @@ export type OnChange = (
 
 export type Props = Omit<JSX.HTMLAttributes<HTMLSelectElement>, "onChange"> & {
   options: Option[];
+  className?: string;
   onChange?: OnChange;
 };
 

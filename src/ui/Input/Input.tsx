@@ -17,6 +17,7 @@ export type Props = Omit<
 > & {
   onChange?: OnChange;
   onFocus?: onFocus;
+  className?: string;
 };
 
 export const Input = ({

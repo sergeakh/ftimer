@@ -13,6 +13,7 @@ export type OnChange = (
 
 export type Props = Omit<JSX.HTMLAttributes<HTMLInputElement>, "onChange"> & {
   onChange?: OnChange;
+  className?: string;
 };
 
 export const InputColor = ({
